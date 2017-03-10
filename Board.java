@@ -1,11 +1,11 @@
 package game;
 
 public class Board {
-	private Piece[][] board;
+	private Colour[][] board;
 	
 	public Board() {
 		
-		Piece[][] board = {{Piece.ORANGE,Piece.DBLUE,Piece.LBLUE,Piece.PINK,Piece.YELLOW}};
+		Colour[][] board = {{Colour.ORANGE,Colour.DBLUE,Colour.LBLUE,Colour.PINK,Colour.YELLOW,Colour.RED,Colour.GREEN,Colour.BROWN}};
 		
 		
 		

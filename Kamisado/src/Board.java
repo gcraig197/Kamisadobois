@@ -1,8 +1,9 @@
-
+import java.util.ArrayList;
 
 public class Board {
 	private Colour[][] boardGrid;
 	private Piece [][] pieceGrid;
+	private ArrayList<Board> undo;
 	
 	  public Board() {
 	        boardGrid = new Colour[][] {{Colour.ORANGE,Colour.DBLUE,Colour.LBLUE,Colour.PINK,Colour.YELLOW,Colour.RED,Colour.GREEN,Colour.BROWN},
@@ -15,6 +16,7 @@ public class Board {
 	                            {Colour.BROWN,Colour.GREEN,Colour.RED,Colour.YELLOW,Colour.PINK,Colour.LBLUE,Colour.DBLUE,Colour.ORANGE}
 	                            };
 	                            pieceGrid = new Piece [8][8];
+	                            undo = new ArrayList<Board>();
 			
 				
 	}

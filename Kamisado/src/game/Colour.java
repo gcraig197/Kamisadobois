@@ -1,6 +1,6 @@
 package game;
 
-public enum Piece {
+public enum Colour {
 
 	ORANGE,
 	DBLUE,
@@ -9,7 +9,9 @@ public enum Piece {
 	YELLOW,
 	RED,
 	GREEN,
-	BROWN;
+	BROWN,
+	WHITE,
+	BLACK;
 	
 	
 }

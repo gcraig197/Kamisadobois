@@ -1,11 +1,11 @@
 
 
 public class GameDriver {
-
+State gameState;
 	public GameDriver() {
-	// TODO Auto-generated constructor stub
+	this.gameState = new State();
 }
 	public void play(){
-		
+    
 	}
 }

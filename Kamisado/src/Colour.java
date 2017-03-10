@@ -9,7 +9,8 @@ public enum Colour {
 	YELLOW,
 	RED,
 	GREEN,
-	BROWN;
-	
+	BROWN,
+	WHITE,
+	BLACK;
 	
 }

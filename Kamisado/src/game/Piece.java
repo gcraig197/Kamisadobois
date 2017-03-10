@@ -1,15 +1,11 @@
 package game;
 
-public enum Piece {
-
-	ORANGE,
-	DBLUE,
-	LBLUE,
-	PINK,
-	YELLOW,
-	RED,
-	GREEN,
-	BROWN;
+public class Piece {
+char team;
+Colour colour;
 	
-	
+public Piece(char team, Colour colour) {
+	colour = this.colour;
+	team = this.team;
+}
 }

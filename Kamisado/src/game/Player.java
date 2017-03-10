@@ -4,7 +4,12 @@ import java.util.ArrayList;
 public class Player {
 public Player(Colour colour) {
 	if(colour == Colour.WHITE){
-		Piece piece = new Piece(Piece);
+		Piece wOrange = new Piece('w',Colour.ORANGE);
+		Piece wBrown = new Piece('w',Colour.BROWN);
+		Piece wDBlue = new Piece('w',Colour.DBLUE);
+		Piece wLBLue = new Piece('w',Colour.ORANGE);
+		Piece wPink = new Piece('w',Colour.PINK);
+		Piece wYellow = new Piece('w',Colour.YELLOW);
 	}
 }
 

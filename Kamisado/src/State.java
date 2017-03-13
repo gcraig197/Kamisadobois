@@ -3,16 +3,24 @@
 public class State {
 	private Piece[][] pieceGrid;
 	public State() {
-		pieceGrid = new Piece [8][8];
-	Board board = new Board();
+		Board board = new Board();
+		board.Setup();
 	
 }
-	public boolean legal( String move){
-		
-		return false;
-	}
+	//public boolean legal(){
+		// check if move is allowablereturn false;
+	//}
 	
-	public void make(String move){
+	public void setPieceGrid(Piece piece ,int x ,int y){
+		pieceGrid [x][y] = piece;
 		
+	}
+	public void isEnd(){
+		
+	}
+	public int getPlayerTurn(int turncount){
+		if(turncount % 2 == 0)
+			return 1;
+		return 2;
 	}
 }

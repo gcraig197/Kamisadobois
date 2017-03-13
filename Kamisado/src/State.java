@@ -62,6 +62,8 @@ public class State {
 			return false;
 		}
 
+		
+		//player 1
 		if (player == 1) {
 			if (board.getPiece(currposa, currposb).getTeam()!= 'w') {
 				return false;
@@ -83,7 +85,28 @@ public class State {
 
 				}
 			}
+			// Occupied for diag movement left
+			if (currposb > newposb){ // diag left
+				for (int i = 1; i <= newposa; i++) {
+					if (board.getPiece(currposa + i,currposb - i ).getColour() != Colour.BLANK){
+						return false;
+					}
+					
+				}
+			}
+			// Occupied for diag movement right
+			if (currposb < newposb){ // diag right
+				for (int i = 1; i <= newposa; i++) {
+					if (board.getPiece(currposa + i,currposb + i ).getColour() != Colour.BLANK){
+						return false;
+					}
+					
+				}
+			}
 		}
+				
+			
+		
 
 		
 		//player 2
@@ -108,6 +131,27 @@ public class State {
 
 			}
 		}
+		
+		// Occupied for diag movement left
+		if (currposb > newposb){ // diag left
+			for (int i = 1; i >= newposa; i++) {
+				if (board.getPiece(currposa - i,currposb - i ).getColour() != Colour.BLANK){
+					return false;
+				}
+				
+			}
+		}
+		
+		// Occupied for diag movement right
+		if (currposb < newposb){ // diag right
+			for (int i = 1; i >= newposa; i++) {
+				if (board.getPiece(currposa - i,currposb + i ).getColour() != Colour.BLANK){
+					return false;
+				}
+				
+			}
+		}
+		
 		return true;
 	}
 	

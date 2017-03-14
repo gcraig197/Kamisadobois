@@ -1,8 +1,10 @@
 import java.util.Scanner;
 public class Player {
+	String name;
 	Colour colour;
 	Scanner sc;
-	public Player(Colour colour) {
+	public Player(String name, Colour colour) {
+		this.name = name;
 		this.colour = colour;
 		sc = new Scanner(System.in);
 	}
@@ -12,19 +14,20 @@ public class Player {
 		System.out.println("a b x y");
 		System.out.println("where a and b are the coordinates of the the piece you want to move and x y are the coordinates of where you want to move the peice to.");
 	    int[] moves = new int[4];
-		int movex = sc.nextInt();
-		int movey = sc.nextInt();
-		int newmovex = sc.nextInt();
-		int newmovey = sc.nextInt();
-		moves[0] = movex;
-		moves[1] = movey;
-		moves[2] = newmovex;
-		moves[3] = newmovey;
+	    for(int i=0;i<4;i++){
+	    	moves[i] = sc.nextInt();
+	    }
+		
+	    
 		return moves;
+		
 	}
 
-	public void interrupt(){
-	
+	public void setName(String name){
+		this.name = name;
+	}
+	public String getName(){
+		return name;
 	}
 	public Colour getColour(){
 		return colour;

@@ -18,7 +18,8 @@ public class Board {
 	                            {Colour.LBLUE,Colour.BROWN,Colour.YELLOW,Colour.DBLUE,Colour.GREEN,Colour.PINK,Colour.ORANGE,Colour.RED},
 	                            {Colour.BROWN,Colour.GREEN,Colour.RED,Colour.YELLOW,Colour.PINK,Colour.LBLUE,Colour.DBLUE,Colour.ORANGE}
 	                            };
-	                            pieceGrid = new Piece [8][8];
+	                            
+	         pieceGrid = new Piece [8][8];
 			
 				
 	}
@@ -71,11 +72,11 @@ public class Board {
 	/*
 	 * Basic Functionality for moving pieces to other cells on the board
 	 */
-	public void move(int a, int b, int x, int y) {
-		Piece movedPiece = getPiece(a, b);
-		String move = a + "" + b + "" + x + "" + y + "" ;
+	public Piece[][] move(int a, int b, int x, int y) {
+		Piece movedPiece = getPiece(a,b);
 		pieceGrid[x][y] = movedPiece;
-		pieceGrid[a][b] = null;
+		pieceGrid[a][b] = new Piece('n', Colour.BLANK);
+		return pieceGrid;
 	}
 	
 //	public int moveLegalityTest(String move){
@@ -144,17 +145,14 @@ public class Board {
 	 * Prints the current layout of the board
 	 */
 	public void printCurrentBoard() {
+		System.out.println("KAMISAADDOOOOOOO!!!!!!!");
 		for (int i = 0; i < 8; i++) {
 			System.out.println();
-			for (int j = 0; j < 8; j++) {
-				if(pieceGrid[i][j].getColour() == Colour.BLANK){
-					System.out.println(boardGrid[i][j]);
-				}
-				else if(pieceGrid[i][j].getColour() != Colour.BLANK){
-					System.out.println(pieceGrid[i][j].getColour() + " on " + boardGrid[i][j]);
-				}
-
+			for(int j = 0; j< 8; j++){
+				System.out.print(" " +getPiece(i, j).getColour() +  " ");
 			}
 		}
+		System.out.println();
+		System.out.println();
 	}
 }

@@ -1,53 +1,101 @@
-import java.math.*;
+import java.util.Scanner;
 
 public class State {
-	private Board board;
-	private Piece[][] pieces;
-	private Colour[][] boardGrid;
+	int turnCount;
+	boolean finished;
+	Colour previousColour;
+	Board board;
+	Scanner sc;
 
 	public State() {
-	    board = new Board();
+		turnCount = 0;
+		finished = false;
+
+		previousColour = Colour.BLANK;
+		board = new Board();
 		board.Setup();
-		pieces = board.getPieceGrid();
-		boardGrid = board.getBoard();
+		sc = new Scanner(System.in);
+
 	}
 
-	public boolean isEnd() {
-		for(int i = 0; i < 7;i++){
-			if(board.getPiece(0, i).getTeam() == 'b'){
+	public void printGame() {
+		board.printCurrentBoard();
+	}
+
+	public Colour move(Player player, Colour previousColour) {
+
+		System.out.println("\n\nPlease enter your move using the format");
+		System.out.println("A B X Y");
+		System.out.println("A B = Coords of Current Piece\nX Y = Coords of New Position");
+
+		String input = null;
+			input = sc.nextLine();
+			if (input.toLowerCase().contains("quit")) {
+				System.exit(0);
+			}
+
+			else {
+				
+				int[] moves = new int[4];
+				for (int i = 0; i < 4; i++) {
+					moves[i] = input.charAt(i);
+				}
+				int currposa = moves[0];
+				int currposb = moves[1];
+				int newposa = moves[2];
+				int newposb = moves[3];
+
+				if (movelegality(player, currposa, currposb, newposa, newposb)) {
+					board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
+
+					board.setPieceCell(currposa, currposb, board.getBlankPiece());
+					return board.getColour(newposa, newposb);
+				} else {
+					move(player, previousColour);
+				}
+				
+
+			}
+		
+		return previousColour;
+	}
+
+	public boolean isFinished() {
+		for (int i = 0; i < 8; i++) {
+			if (board.getPieceCell(0, i).getTeam() == Colour.BLACK) {
 				return true;
 			}
 		}
-		for(int j = 0; j < 7; j++){
-			if(pieces[7][j].getTeam() == 'w'){
+		for (int j = 0; j < 8; j++) {
+			if (board.getPieceCell(7, j).getTeam() == Colour.WHITE) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public int getPlayerTurn(int turncount) {
-		if (turncount % 2 == 0)
-			return 1;
-		return 2;
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 
-	public boolean moveLegalityTest(int[] moves, int player, Colour previousColour, int turncount) {
-		
-		int currposa = moves[0];
-		int currposb = moves[1];
-		int newposa = moves[2];
-		int newposb = moves[3];
+	public void setTurnCount(int turnCount) {
+		this.turnCount = turnCount;
+	}
 
-		// works for both teams:
+	public int getTurnCount() {
+		return turnCount;
+	}
+
+	private boolean movelegality(Player player, int currposa, int currposb, int newposa, int newposb) {
+
 		// if no piece at starting point
-		if (pieces[currposa][currposb].getColour() == Colour.BLANK) {
+		if (board.getPieceCell(currposa, currposb).getPieceColour() == Colour.BLANK) {
 			System.out.println("No piece at starting location");
 			return false;
 		}
-		
-		//Correct colour of tower
-		if (turncount != 0 && board.getPiece(currposa, currposb).getColour() != previousColour) {
+
+		// Correct colour of tower
+		if (turnCount != 0 && board.getPieceCell(currposa, currposb).getPieceColour() != previousColour) {
 			System.out.println("Wrong colour of tower");
 			return false;
 		}
@@ -58,12 +106,11 @@ public class State {
 			return false;
 		}
 
-		
-		//player 1
-		if (player == 1) {
-			if (pieces[currposa][currposb].getTeam()!= 'w') {
+		if (player.getTeam() == Colour.WHITE) {
+
+			if (board.getPieceCell(currposa, currposb).getTeam() != Colour.WHITE) {
 				return false;
-				
+
 			}
 
 			// if moving wrong way
@@ -76,103 +123,74 @@ public class State {
 			if (currposb == newposb) {
 				// for loop beginning at currposa + 1 ending at newposa
 				for (int i = currposa + 1; i <= newposa; i++) {
-					if (pieces[i][currposb].getColour() != Colour.BLANK) {
+					if (board.getPieceCell(i, currposb).getPieceColour() != Colour.BLANK) {
 						System.out.println("Path is Blocked by tower");
 						return false;
 					}
 
 				}
 			}
-			// Occupied for diag movement left
-			if (currposb > newposb){ // diag left
-				for (int i = 1; i <= newposa; i++) {
-					if (pieces[currposa + i][currposb - i].getColour() != Colour.BLANK){
-						System.out.println("Path is Blocked by tower");
-						return false;
-					}
-					
-				}
-			}
-			// Occupied for diag movement right
-			if (currposb < newposb){ // diag right
-				for (int i = 1; i <= newposa; i++) {
-					if (board.getPiece(currposa + i,currposb + i ).getColour() != Colour.BLANK){
-						System.out.println("Path is Blocked by tower");
-						return false;
-					}
-					
-				}
-			}
+
 		}
-				
-			
-		
 
-		
-		//player 2
-		else if(player == 2){
-			 if (currposb < newposb) {
-					System.out.println("Temp Error  115");
-					return false;
-					// check occupied
+		else if (player.getTeam() == Colour.BLACK) {
 
-				}
-			 if (pieces[currposa][currposb].getTeam()!= 'b') {
-					System.out.println("Temp Error  121");
-					return false;
-					
-				}
+			if (currposb < newposb) {
+				System.out.println("Temp Error  115");
+				return false;
+				// check occupied
+
+			}
+			if (board.getPieceCell(currposa, currposb).getTeam() != Colour.BLACK) {
+				System.out.println("Temp Error  121");
+				return false;
+
+			}
 			// Occupied for vert movement
-			 if (currposb == newposb) {
-					// for loop beginning at currposa + 1 ending at newposa
-					for (int i = currposa - 1; i >= newposa; i--) {
-						if (pieces[i][currposb].getColour() != Colour.BLANK) {
-							System.out.println(" Path Blocked by tower");
-							return false;
-						}
+			if (currposb == newposb) {
+				// for loop beginning at currposa + 1 ending at newposa
+				for (int i = currposa - 1; i >= newposa; i--) {
+					if (board.getPieceCell(i, currposb).getPieceColour() != Colour.BLANK) {
+						System.out.println(" Path Blocked by tower");
+						return false;
+					}
 
-					}
 				}
+			}
 			// Occupied for diag movement left
-				if (currposb > newposb){ // diag left
-					for (int i = 1; i >= newposa; i++) {
-						if (pieces[currposa-i][currposb-i].getColour() != Colour.BLANK){
-							System.out.println(" Path Blocked by tower");
-							return false;
-						}
-						
+			if (currposb > newposb) { // diag left
+				for (int i = 1; i >= newposa; i++) {
+					if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() != Colour.BLANK) {
+						System.out.println(" Path Blocked by tower");
+						return false;
 					}
+
 				}
-				
-				// Occupied for diag movement right
-				if (currposb < newposb){ // diag right
-					for (int i = 1; i >= newposa; i++) {
-						if (pieces[currposa-i][currposb+i].getColour() != Colour.BLANK){
-							System.out.println(" Path Blocked by tower");
-							return false;
-						}
-						
+			}
+
+			// Occupied for diag movement right
+			if (currposb < newposb) { // diag right
+				for (int i = 1; i >= newposa; i++) {
+					if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() != Colour.BLANK) {
+						System.out.println(" Path Blocked by tower");
+						return false;
 					}
+
 				}
+			}
+
 		}
-		
+
 		return true;
+
 	}
-	
-	public Colour updateMove(int[] moves){
-		int currposa = moves[0];
-		int currposb = moves[1];
-		int newposa = moves[2];
-		int newposb = moves[3];
-		pieces = board.move(currposa,currposb,newposa, newposb);
-		
-		Colour newColour = boardGrid[newposa][newposb];
-		
-		return newColour;
+
+	public int getPlayerTurn() {
+		return turnCount;
 	}
-	
-	
-	public void printGame(){
-		board.printCurrentBoard();
+
+	public void setPlayerTurn(int turnCount) {
+		this.turnCount = turnCount;
 	}
+
 }

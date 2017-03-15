@@ -1,5 +1,4 @@
 
-
 public class Board {
 	private Colour[][] boardGrid;
 	private Piece [][] pieceGrid;
@@ -24,16 +23,12 @@ public class Board {
 				
 	}
 	
-	/*
-	 * Possibly unnecessary
-	 */
+	
 	public Colour[][] getBoard() {
 		return boardGrid;
 	}
 
-	/*
-	 * Possibly unnecessary
-	 */
+	
 	public void setBoard(Colour[][] board) {
 		this.boardGrid = board;
 	}
@@ -52,14 +47,19 @@ public class Board {
 		this.pieceGrid = pieceGrid;
 	}
 
-	/*
-	 * Player move SELECT PIECE SELECT CELL TO MOVE TO VERIFY MOVE IS LEGAL MOVE
-	 * PIECE X REMOVE OLD PIECE X
-	 */
-	public void make(String move) {
-
+	
+	public Piece getPieceCell(int a, int b){
+		return pieceGrid[a][b];
+	}
+	
+	public void setPieceCell(int a, int b , Piece piece) {
+		pieceGrid[a][b] = piece;
 	}
 
+	public Piece getBlankPiece(){
+		Piece p = new Piece(Colour.BLANK,Colour.BLANK);
+		return p;
+	}
 	/*
 	 * Returns the colour of the specified board cell
 	 */
@@ -69,46 +69,7 @@ public class Board {
 
 	}
 
-	/*
-	 * Basic Functionality for moving pieces to other cells on the board
-	 */
-	public Piece[][] move(int a, int b, int x, int y) {
-		Piece movedPiece = getPiece(a,b);
-		pieceGrid[x][y] = movedPiece;
-		pieceGrid[a][b] = new Piece('n', Colour.BLANK);
-		return pieceGrid;
-	}
 	
-//	public int moveLegalityTest(String move){
-//		
-//		char[] parts = move.toCharArray();
-//		int currposx = Integer.parseInt(Character.toString(parts[0]));
-//		int currposy = Integer.parseInt(Character.toString(parts[1]));
-//		int newposx = Integer.parseInt(Character.toString(parts[2]));
-//		int newposy = Integer.parseInt(Character.toString(parts[3]));
-//		
-//		if 
-//		
-//
-//	
-//		
-//		
-//		
-//	}
-
-	/*
-	 * 
-	 */
-	public Piece getPiece(int a, int b) {
-		return pieceGrid[a][b];
-	}
-
-	/*
-	 * End the game if a win state is entered or player resigns
-	 */
-	public void gameOver() {
-
-	}
 
 	/*
 	 * Initialize pieceGrid values to null and sets up the starting tower
@@ -117,27 +78,27 @@ public class Board {
 	public void Setup() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				pieceGrid[i][j] = new Piece('n',Colour.BLANK);
+				pieceGrid[i][j] = new Piece(Colour.BLANK,Colour.BLANK);
 
 			}
 		}
-		pieceGrid[0][0] = new Piece('w', Colour.ORANGE);
-		pieceGrid[0][1] = new Piece('w', Colour.DBLUE);
-		pieceGrid[0][2] = new Piece('w', Colour.LBLUE);
-		pieceGrid[0][3] = new Piece('w', Colour.PINK);
-		pieceGrid[0][4] = new Piece('w', Colour.YELLOW);
-		pieceGrid[0][5] = new Piece('w', Colour.RED);
-		pieceGrid[0][6] = new Piece('w', Colour.GREEN);
-		pieceGrid[0][7] = new Piece('w', Colour.BROWN);
+		pieceGrid[0][0] = new Piece(Colour.ORANGE, Colour.WHITE);
+		pieceGrid[0][1] = new Piece(Colour.DBLUE, Colour.WHITE);
+		pieceGrid[0][2] = new Piece(Colour.LBLUE, Colour.WHITE);
+		pieceGrid[0][3] = new Piece(Colour.PINK, Colour.WHITE);
+		pieceGrid[0][4] = new Piece(Colour.YELLOW, Colour.WHITE);
+		pieceGrid[0][5] = new Piece(Colour.RED, Colour.WHITE);
+		pieceGrid[0][6] = new Piece(Colour.GREEN, Colour.WHITE);
+		pieceGrid[0][7] = new Piece(Colour.BROWN, Colour.WHITE);
 
-		pieceGrid[7][0] = new Piece('b', Colour.BROWN);
-		pieceGrid[7][1] = new Piece('b', Colour.GREEN);
-		pieceGrid[7][2] = new Piece('b', Colour.RED);
-		pieceGrid[7][3] = new Piece('b', Colour.YELLOW);
-		pieceGrid[7][4] = new Piece('b', Colour.PINK);
-		pieceGrid[7][5] = new Piece('b', Colour.LBLUE);
-		pieceGrid[7][6] = new Piece('b', Colour.DBLUE);
-		pieceGrid[7][7] = new Piece('b', Colour.ORANGE);
+		pieceGrid[7][0] = new Piece(Colour.BROWN, Colour.BLACK);
+		pieceGrid[7][1] = new Piece(Colour.GREEN, Colour.BLACK);
+		pieceGrid[7][2] = new Piece(Colour.RED, Colour.BLACK);
+		pieceGrid[7][3] = new Piece(Colour.YELLOW, Colour.BLACK);
+		pieceGrid[7][4] = new Piece(Colour.PINK, Colour.BLACK);
+		pieceGrid[7][5] = new Piece(Colour.LBLUE, Colour.BLACK);
+		pieceGrid[7][6] = new Piece(Colour.DBLUE, Colour.BLACK);
+		pieceGrid[7][7] = new Piece(Colour.ORANGE, Colour.BLACK);
 
 	}
 
@@ -149,7 +110,7 @@ public class Board {
 		for (int i = 0; i < 8; i++) {
 			System.out.println();
 			for(int j = 0; j< 8; j++){
-				System.out.print(" " +getPiece(i, j).getColour() +  " ");
+				System.out.print(" " +getPieceCell(i, j).getPieceColour() +  " ");
 			}
 		}
 		System.out.println();

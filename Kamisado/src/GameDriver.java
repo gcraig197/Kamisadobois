@@ -1,62 +1,121 @@
+/**
+ * 
+ */
+
+/**
+ * @author Gavin
+ *
+ */
+import java.util.Scanner;
 public class GameDriver {
-	State gameState;
+	State state;
 	int turncount;
 	Colour previousColour;
 	Player player1;
 	Player player2;
-
+	Player currPlayer;
+	Scanner sc;
+	
 	public GameDriver() {
-		this.gameState = new State();
-		player1 = new Player("",Colour.WHITE);
-		player2 = new Player("",Colour.BLACK);
+		this.player1 = new Player();
+		this.player2 = new Player();
+		sc = new Scanner(System.in);
 		turncount = 0;
 		previousColour = Colour.BLANK;
+		this.state = new State();
 		
 	}
 	
 	public void setup(){
-		player1.setName();
-		player2.setName();
+		System.out.println("Please enter the name for player 1");
+		String name = sc.nextLine();
+		if(name.isEmpty()){
+			player1.setName("player1");
+		}
+		else{
+			player1.setName(name);
+		}
+		
+		
+		System.out.println("Please enter the name for player 2");
+	    name = sc.nextLine();
+		if(name.isEmpty()){
+			player2.setName("player2");
+		}
+		else{
+			player2.setName(name);
+		}
+		
+		System.out.println("please enter the name of the player that will be white");
+		String wplayer = sc.nextLine();
+		if(wplayer.equals(player2.getName())){
+			String swap = player2.getName();
+			player2.setName(player1.getName());
+			player1.setName(swap);
+		}
+		player1.setTeam(Colour.WHITE);
+		player2.setTeam(Colour.BLACK);
+		
+		
+		System.out.println(player1.getName() + " " + player1.getTeam());
+		System.out.println(player2.getName() + " " + player2.getTeam());
+		
 	}
-
+	
+	public Player getPlayerTurn(){
+		if(turncount == 0){
+			return player1;
+		}
+		else if(turncount % 2 == 0){
+			return player1;
+		}
+		else{
+			return player2;
+		}
+		
+	}
+	
 	public Colour getPreviousColour() {
 		return previousColour;
 	}
-
 	public void setPreviousColour(Colour previousColour) {
 		this.previousColour = previousColour;
 	}
 
+	
+	
 	public void play() {
-		gameState.printGame();
-		while (gameState.isEnd() == false) {
-			int[] moves = new int[4];
-			int playersTurn = gameState.getPlayerTurn(turncount);
-			if (playersTurn == 1) {
-				System.out.println("Player " + playersTurn + " make your move!");
-				if(turncount != 0){
+		
+		currPlayer = new Player();
+		state.printGame();
+		while (state.isFinished() == false) {
+		
+			currPlayer = getPlayerTurn();
+			if (currPlayer == player1) {
+				System.out.println(currPlayer.getName() + " make your move!");
+				if(turncount == 0){
+					System.out.println("Move any piece");
+				}
+				else{
 					System.out.println("Move your " + previousColour + " piece.");
 				}
-				moves = player1.MakeMove();
-			} else {
-				System.out.println("Player " + playersTurn + " make your move!");
+				previousColour = state.move(player1, previousColour);
+			}
+			else {
+				currPlayer = player2;
+				System.out.println(currPlayer.getName() + " make your move!");
 				System.out.println("Move your " + previousColour + " piece.");
-				moves = player2.MakeMove();
+				previousColour = state.move(player2, previousColour);
 			}
-			if (gameState.moveLegalityTest(moves, playersTurn, previousColour,turncount)) {
-				previousColour = gameState.updateMove(moves);
-
-			}
-			turncount++;
-			gameState.printGame();
-			
-		}
-		int winningPlayer = gameState.getPlayerTurn(turncount -1);
-		System.out.println("Player " + winningPlayer + " Wins the game!!!!!!!");
 		
-	}
+			turncount++;
+			state.printGame();
 
-	public int getTurnCount() {
-		return turncount;
+			}
+		System.out.println(currPlayer.getName() + " Wins the game!!!!!!!");
 	}
+	
+	
 }
+
+

@@ -1,26 +1,11 @@
 import java.util.Scanner;
 public class Player {
 	String name;
-	Colour colour;
+	Colour team;
 	Scanner sc;
-	public Player(String name, Colour colour) {
-		this.name = name;
-		this.colour = colour;
+	public Player() {
+		this.name = "default";
 		sc = new Scanner(System.in);
-	}
-
-	public int[] MakeMove(){
-		System.out.println("Please enter your move using the format");
-		System.out.println("a b x y");
-		System.out.println("where a and b are the coordinates of the the piece you want to move and x y are the coordinates of where you want to move the peice to.");
-	    int[] moves = new int[4];
-	    for(int i=0;i<4;i++){
-	    	moves[i] = sc.nextInt();
-	    }
-		
-	    
-		return moves;
-		
 	}
 
 	public void setName(String name){
@@ -29,11 +14,11 @@ public class Player {
 	public String getName(){
 		return name;
 	}
-	public Colour getColour(){
-		return colour;
+	public Colour getTeam(){
+		return team;
 	}
-	public void setColour(Colour colour){
-		this.colour = colour;
+	public void setTeam(Colour team){
+		this.team = team;
 	}
 
 }

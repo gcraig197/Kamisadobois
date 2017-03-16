@@ -68,6 +68,41 @@ public class Board {
 		return boardGrid[x][y];
 
 	}
+	
+	public char getCharofColour(Colour colour){
+		char c = ' ';
+		
+		 if(colour == Colour.ORANGE){
+			c = 'O';
+		}
+		else if(colour == Colour.DBLUE){
+			c = 'D';
+		}
+		else if(colour == Colour.LBLUE){
+			c = 'L';
+		}
+		else if(colour == Colour.PINK){
+			c = 'P';
+		}
+		else if(colour == Colour.YELLOW){
+			c = 'Y';
+		}
+		else if(colour == Colour.RED){
+			c = 'R';
+		}
+		else if(colour == Colour.GREEN){
+			c = 'G';
+		}
+		else if(colour == Colour.BROWN){
+			c = 'B';
+		}
+		else if(colour == Colour.BLANK){
+			c = 'N';
+		}
+		
+		return c;
+	}
+
 
 	
 
@@ -106,14 +141,39 @@ public class Board {
 	 * Prints the current layout of the board
 	 */
 	public void printCurrentBoard() {
-		System.out.println("KAMISAADDOOOOOOO!!!!!!!");
+		System.out.println("TERMINALSAADDOOOOOOO!!!!!!!");
 		for (int i = 0; i < 8; i++) {
 			System.out.println();
 			for(int j = 0; j< 8; j++){
-				System.out.print(" " +getPieceCell(i, j).getPieceColour() +  " ");
+				System.out.print(getCharofColour(getPieceCell(i, j).getPieceColour()) + " on " + getCharofColour(getColour(i, j)) + "  ");
 			}
 		}
 		System.out.println();
 		System.out.println();
 	}
+	
+	public int getLastPieceX(Player player, Colour previousColour){
+		int currposa = 0;
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(getPieceCell(i, j).getPieceColour() == previousColour && getPieceCell(i, j).getTeam() == player.getTeam()){
+					currposa = i;
+				}
+			}
+		}
+		return currposa;
+	}
+	
+	public int getLastPieceY(Player player, Colour previousColour){
+		int currposb = 0;
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(getPieceCell(i, j).getPieceColour() == previousColour && getPieceCell(i, j).getTeam() == player.getTeam()){
+					currposb = j;
+				}
+			}
+		}
+		return currposb;
+	}
 }
+

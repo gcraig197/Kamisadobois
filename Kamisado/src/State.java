@@ -1,17 +1,13 @@
 import java.util.Scanner;
 
 public class State {
-	int turnCount;
 	boolean finished;
-	Colour previousColour;
 	Board board;
 	Scanner sc;
+	
 
 	public State() {
-		turnCount = 0;
 		finished = false;
-
-		previousColour = Colour.BLANK;
 		board = new Board();
 		board.Setup();
 		sc = new Scanner(System.in);
@@ -23,40 +19,64 @@ public class State {
 	}
 
 	public Colour move(Player player, Colour previousColour) {
+		
+		if (deadLockCheck(player, previousColour) == false) {
+			return board.getColour(board.getLastPieceX(player, previousColour), board.getLastPieceY(player, previousColour));
+		}
 
 		System.out.println("\n\nPlease enter your move using the format");
-		System.out.println("A B X Y");
+		System.out.println("ABXY");
 		System.out.println("A B = Coords of Current Piece\nX Y = Coords of New Position");
+		System.out.println("Type quit at any time to quit");
 
+		int[] moves;
 		String input = null;
-			input = sc.nextLine();
-			if (input.toLowerCase().contains("quit")) {
-				System.exit(0);
+		input = sc.nextLine();
+		if (input.toLowerCase().contains("quit")) {
+			System.out.println("Quitting Game...");
+			System.exit(0);
+		} else if (input.toLowerCase().equals("")) {
+			System.out.println("Please enter a valid move or Quit...");
+			move(player, previousColour);
+		}
+
+		else {
+
+			moves = new int[input.length()];
+
+			for (int i = 0; i < input.length(); i++) {
+
+				// CHECK IF INPUT IS A NUMBER
+				// if (moves[i] != (int)moves[i] ) {
+				// System.out.println("Please enter a valid move or Quit...");
+				// move(player, previousColour);
+				// }
+				moves[i] = input.charAt(i) - '0';
+			}
+
+			//
+			// int[] moves = new int[4];
+			// for (int i = 0; i < 4; i++) {
+			// moves[i] = Integer.parseInt(input);
+
+			int currposa = moves[0];
+			int currposb = moves[1];
+			int newposa = moves[2];
+			int newposb = moves[3];
+			
+
+				 if (movelegality(player, currposa, currposb, newposa, newposb, previousColour)) {
+				board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
+
+				board.setPieceCell(currposa, currposb, board.getBlankPiece());
+				return board.getColour(newposa, newposb);
 			}
 
 			else {
-				
-				int[] moves = new int[4];
-				for (int i = 0; i < 4; i++) {
-					moves[i] = input.charAt(i);
-				}
-				int currposa = moves[0];
-				int currposb = moves[1];
-				int newposa = moves[2];
-				int newposb = moves[3];
-
-				if (movelegality(player, currposa, currposb, newposa, newposb)) {
-					board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
-
-					board.setPieceCell(currposa, currposb, board.getBlankPiece());
-					return board.getColour(newposa, newposb);
-				} else {
-					move(player, previousColour);
-				}
-				
-
+				move(player, previousColour);
 			}
-		
+
+		}
 		return previousColour;
 	}
 
@@ -78,15 +98,79 @@ public class State {
 		this.finished = finished;
 	}
 
-	public void setTurnCount(int turnCount) {
-		this.turnCount = turnCount;
+	private boolean deadLockCheck(Player player,Colour previousColour) {
+		int currposa = 0;
+		int currposb = 0;
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(board.getPieceCell(i, j).getPieceColour() == previousColour && board.getPieceCell(i, j).getTeam() == player.getTeam()){
+					currposa = i;
+					currposb = j;
+				}
+			}
+		}
+		
+		
+		if (player.getTeam() == Colour.WHITE && currposb != 0 && currposb != 7
+				&& board.getPieceCell(currposa + 1, currposb).getPieceColour() != Colour.BLANK
+				&& board.getPieceCell(currposa + 1, currposb - 1).getPieceColour() != Colour.BLANK
+				&& board.getPieceCell(currposa + 1, currposb + 1).getPieceColour() != Colour.BLANK) {
+			return false;
+		}
+			else if(player.getTeam() == Colour.WHITE && currposb == 0
+					&& board.getPieceCell(currposa + 1, currposb + 1).getPieceColour() != Colour.BLANK
+					&& board.getPieceCell(currposa + 1, currposb).getPieceColour() != Colour.BLANK ){
+				return false;
+			}
+			else if(player.getTeam() == Colour.WHITE && currposb == 7
+					&& board.getPieceCell(currposa + 1, currposb).getPieceColour() != Colour.BLANK
+					&& board.getPieceCell(currposa + 1, currposb -1).getPieceColour() != Colour.BLANK ){
+				return false;
+			}
+		 else if (player.getTeam() == Colour.BLACK && currposb != 0 && currposb != 7
+				&& board.getPieceCell(currposa - 1, currposb).getPieceColour() != Colour.BLANK
+				&& board.getPieceCell(currposa - 1, currposb - 1).getPieceColour() != Colour.BLANK
+				&& board.getPieceCell(currposa - 1, currposb + 1).getPieceColour() != Colour.BLANK) {
+			return false;
+		}  
+		 else if(player.getTeam() == Colour.BLACK && currposb == 0
+					&& board.getPieceCell(currposa - 1, currposb).getPieceColour() != Colour.BLANK
+					&& board.getPieceCell(currposa - 1, currposb +1).getPieceColour() != Colour.BLANK ){
+				return false;
+		 }
+		 else if(player.getTeam() == Colour.BLACK && currposb == 0
+					&& board.getPieceCell(currposa - 1, currposb).getPieceColour() != Colour.BLANK
+					&& board.getPieceCell(currposa - 1, currposb -1).getPieceColour() != Colour.BLANK ){
+				return false;
+		 }
+		else {
+			return true;
+		}
+	
 	}
 
-	public int getTurnCount() {
-		return turnCount;
-	}
+		
+		
+		
+		
+//		if (player.getTeam() == Colour.WHITE
+//				&& board.getPieceCell(currposa + 1, currposb).getPieceColour() != Colour.BLANK
+//				&& board.getPieceCell(currposa + 1, currposb - 1).getPieceColour() != Colour.BLANK
+//				&& board.getPieceCell(currposa + 1, currposb + 1).getPieceColour() != Colour.BLANK) {
+//			return false;
+//		} else if (player.getTeam() == Colour.BLACK
+//				&& board.getPieceCell(currposa - 1, currposb).getPieceColour() != Colour.BLANK
+//				&& board.getPieceCell(currposa - 1, currposb - 1).getPieceColour() != Colour.BLANK
+//				&& board.getPieceCell(currposa - 1, currposb + 1).getPieceColour() != Colour.BLANK) {
+//			return false;
+//		} else {
+//			return true;
+//		}
+//
+//	}
 
-	private boolean movelegality(Player player, int currposa, int currposb, int newposa, int newposb) {
+	private boolean movelegality(Player player, int currposa, int currposb, int newposa, int newposb,
+			Colour previousColour) {
 
 		// if no piece at starting point
 		if (board.getPieceCell(currposa, currposb).getPieceColour() == Colour.BLANK) {
@@ -95,7 +179,8 @@ public class State {
 		}
 
 		// Correct colour of tower
-		if (turnCount != 0 && board.getPieceCell(currposa, currposb).getPieceColour() != previousColour) {
+		if (previousColour != Colour.BLANK
+				&& board.getPieceCell(currposa, currposb).getPieceColour() != previousColour) {
 			System.out.println("Wrong colour of tower");
 			return false;
 		}
@@ -183,14 +268,6 @@ public class State {
 
 		return true;
 
-	}
-
-	public int getPlayerTurn() {
-		return turnCount;
-	}
-
-	public void setPlayerTurn(int turnCount) {
-		this.turnCount = turnCount;
 	}
 
 }

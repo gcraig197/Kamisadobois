@@ -136,6 +136,24 @@ public class Board {
 		pieceGrid[7][7] = new Piece(Colour.ORANGE, Colour.BLACK);
 
 	}
+	
+	public void setUpDeadlock(){
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 8; j++) {
+				pieceGrid[i][j] = new Piece(Colour.LBLUE,Colour.WHITE);
+
+			}
+		}
+		
+		for (int i = 4; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				pieceGrid[i][j] = new Piece(Colour.LBLUE,Colour.BLACK);
+
+			}
+		}
+		
+		pieceGrid[4][6] =  new Piece(Colour.BLANK,Colour.BLANK);
+	}
 
 	/*
 	 * Prints the current layout of the board

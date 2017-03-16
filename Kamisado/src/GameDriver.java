@@ -8,7 +8,8 @@
  */
 import java.util.Scanner;
 public class GameDriver {
-	State state;
+	private State state;
+	private boolean speedgame;
 	int turncount;
 	Colour previousColour;
 	Player player1;
@@ -16,13 +17,18 @@ public class GameDriver {
 	Player currPlayer;
 	Scanner sc;
 	
+	
+	public static void main(String[] args) {
+		GameDriver gd = new GameDriver();
+		gd.setup();
+		gd.play();
+	}
 	public GameDriver() {
 		this.player1 = new Player();
 		this.player2 = new Player();
 		sc = new Scanner(System.in);
 		turncount = 0;
 		previousColour = Colour.BLANK;
-		this.state = new State();
 		
 	}
 	
@@ -57,8 +63,16 @@ public class GameDriver {
 		player2.setTeam(Colour.BLACK);
 		
 		
-		System.out.println(player1.getName() + " " + player1.getTeam());
-		System.out.println(player2.getName() + " " + player2.getTeam());
+		System.out.println("Do you want to play a speedgame? Y/N");
+		String input = sc.nextLine();
+		if(input.toLowerCase().equals("y")){
+			speedgame = true;
+			this.state = new State(speedgame);
+		}
+		else{
+			speedgame = false;
+			  this.state = new State(speedgame);
+		}
 		
 	}
 	

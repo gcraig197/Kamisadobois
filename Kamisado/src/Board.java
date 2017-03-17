@@ -159,7 +159,7 @@ public class Board {
 	 * Prints the current layout of the board
 	 */
 	public void printCurrentBoard() {
-		System.out.println("TERMINALSAADDOOOOOOO!!!!!!!");
+		System.out.println();
 		for (int i = 0; i < 8; i++) {
 			System.out.println();
 			for(int j = 0; j< 8; j++){

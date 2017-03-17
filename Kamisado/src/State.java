@@ -30,7 +30,7 @@ public class State {
 
 		System.out.println("\n\nPlease enter your move using the format");
 		System.out.println("ABXY");
-		System.out.println("A B = Coords of Current Piece\nX Y = Coords of New Position");
+		System.out.println("AB= Coords of Current Piece\nX Y = Coords of New Position");
 		System.out.println("Type quit at any time to quit");
 
 		
@@ -205,8 +205,9 @@ public class State {
 		}
 
 		if (player.getTeam() == Colour.WHITE) {
-
+			// Cannot move other players pieces
 			if (board.getPieceCell(currposa, currposb).getTeam() != Colour.WHITE) {
+				System.out.println("Cannot move other players pieces");
 				return false;
 
 			}
@@ -234,13 +235,13 @@ public class State {
 		else if (player.getTeam() == Colour.BLACK) {
 
 			if (currposb < newposb) {
-				System.out.println("Temp Error  115");
+				System.out.println("Moving wrong way");
 				return false;
 				// check occupied
 
 			}
 			if (board.getPieceCell(currposa, currposb).getTeam() != Colour.BLACK) {
-				System.out.println("Temp Error  121");
+				System.out.println("Cannot move other players pieces");
 				return false;
 
 			}

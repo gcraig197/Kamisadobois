@@ -60,7 +60,7 @@ public class BoardGUI extends JFrame {
 					buttons[i][j].setBackground(Color.GREEN);
 				} else {
 					buttons[i][j].setBackground(new Color(160, 82, 45));
-					buttons[i][j].addActionListener(bh);
+					
 				}
 			}
 		}
@@ -68,6 +68,29 @@ public class BoardGUI extends JFrame {
 	}
 
 	public void refresh(Board board) {
+		
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board.getColour(i, j) == Colour.ORANGE) {
+					buttons[i][j].setBackground(Color.ORANGE);
+				} else if (board.getColour(i, j) == Colour.LBLUE) {
+					buttons[i][j].setBackground(Color.CYAN);
+				} else if (board.getColour(i, j) == Colour.DBLUE) {
+					buttons[i][j].setBackground(Color.BLUE);
+				} else if (board.getColour(i, j) == Colour.PINK) {
+					buttons[i][j].setBackground(Color.PINK);
+				} else if (board.getColour(i, j) == Colour.YELLOW) {
+					buttons[i][j].setBackground(Color.YELLOW);
+				} else if (board.getColour(i, j) == Colour.RED) {
+					buttons[i][j].setBackground(Color.RED);
+				} else if (board.getColour(i, j) == Colour.GREEN) {
+					buttons[i][j].setBackground(Color.GREEN);
+				} else {
+					buttons[i][j].setBackground(new Color(160, 82, 45));
+					
+				}
+			}
+		}
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -132,10 +155,11 @@ public class BoardGUI extends JFrame {
 			}
 		}
 
-		setSize(200, 200);
+		setSize(800, 800);
 		setResizable(false);
 		setVisible(true);
 		pack();
+		
 	}
 
 	public void storeX(int x) {
@@ -161,6 +185,94 @@ public class BoardGUI extends JFrame {
 	public boolean canMove(){
 		return canMove;
 	}
+	
+	public void availableMoves(int currposa, int currposb, Player player) {
+		if (player.getTeam() == Colour.WHITE) {
+			
+			// White Vertical	
+			for (int i = currposa + 1; i < 8; i++) {
+					if(board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK){
+						buttons[i][currposb].setBackground(Color.lightGray);
+					}
+					else{
+						break;
+					}
+			}
+			
+			// White Left Diagonal
+			
+			for (int i = 1; i < 8; i++) {
+				if ((currposb - i) >= 0) {
+					if(board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK ){
+						buttons[currposa + i][currposb - i].setBackground(Color.lightGray);
+					} 
+					else{
+						break;
+					}
+				}
+				
+
+			}
+			
+			// White Right Diagonal
+			
+			for (int i = 1; i < 8; i++) {
+				if ((currposb + i) <= 7) {
+					if(board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK ){
+						buttons[currposa + i][currposb + i].setBackground(Color.lightGray);
+					} 
+					else{
+						break;
+					}
+				}
+
+			}
+			
+			
+		} else if(player.getTeam() == Colour.BLACK) {
+			
+			// Black Vertical
+			
+			for (int i = currposa - 1; i > 0; i--) {
+				if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+					buttons[i][currposb].setBackground(Color.lightGray);
+				}
+				else{
+					break;
+				}
+			}
+			
+			//Black Left Diagonal
+			
+			for (int i = 1; i < 8; i++) {
+				if ((currposb - i) >= 0) {
+					if(board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK ){
+						buttons[currposa - i][currposb - i].setBackground(Color.lightGray);
+					} 
+					else{
+						break;
+					}
+				}
+
+			}
+			
+			// Black Right Diagonal 
+			
+			for (int i = 1; i < 8; i++) {
+				if ((currposb + i) <= 7) {
+					if(board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK ){
+						buttons[currposa - i][currposb + i].setBackground(Color.lightGray);
+					} 
+					else{
+						break;
+					}
+				}
+			}
+
+		}
+	}
+	
+	
 	private class ButtonHandler implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {

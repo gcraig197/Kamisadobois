@@ -7,6 +7,7 @@
  *
  */
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 public class GameDriver {
 	private State state;
 	private boolean speedgame;
@@ -34,7 +35,17 @@ public class GameDriver {
 	}
 	
 	public void setup(){
-		String name = sc.nextLine();
+		gm = new GameMenuGUI();
+		while(gm.isFinished() == false){
+			try {
+				TimeUnit.MILLISECONDS.sleep(250);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		String name = gm.getPlayer1Name();
 		if(name.isEmpty()){
 			player1.setName("player1");
 		}
@@ -43,7 +54,7 @@ public class GameDriver {
 		}
 		
 		
-	    name = sc.nextLine();
+	    name = gm.getPlayer2Name();
 		if(name.isEmpty()){
 			player2.setName("player2");
 		}
@@ -52,7 +63,7 @@ public class GameDriver {
 		}
 		
 		System.out.println("please enter the name of the player that will be white");
-		String wplayer = sc.nextLine();
+		String wplayer = gm.getWhitePlayer();
 		if(wplayer.equals(player2.getName())){
 			String swap = player2.getName();
 			player2.setName(player1.getName());
@@ -123,10 +134,11 @@ public class GameDriver {
 			}
 		
 			turncount++;
-			
+			state.printGame();
 
 			}
 		System.out.println(currPlayer.getName() + " Wins the game!!!!!!!");
+		System.exit(0);
 	}
 	
 	

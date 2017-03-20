@@ -19,6 +19,7 @@ private JTextField textField2;
 private JLabel l;
 private JLabel l2;
 private JComboBox cb;
+private boolean finished;
 
 
 public static void main(String[] args) {
@@ -26,7 +27,7 @@ public static void main(String[] args) {
 	
 }
 	public GameMenuGUI(){
-		
+		finished = false;
 		jp = new JPanel();
 		jp.setLayout(null);
 		b = new JButton("Click me");
@@ -63,21 +64,18 @@ public static void main(String[] args) {
 		
 	}
 	public String getPlayer1Name(){
-		if(textField1.getText().isEmpty()){
-			return "Player 1";
-		}
 		return textField1.getText();
 	}
 	
 	public String getPlayer2Name(){
-		if(textField2.getText().isEmpty()){
-			return "Player 2";
-		}
 		return textField2.getText();
 	}
 	
 	public String getWhitePlayer(){
 		return String.valueOf(cb.getSelectedItem());
+	}
+	public boolean isFinished(){
+		return finished;
 	}
 	
 	public void newFrame(){
@@ -100,6 +98,7 @@ public static void main(String[] args) {
 		button.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e){
+						    finished = true;
 							frame.dispose();
 		}
 				});

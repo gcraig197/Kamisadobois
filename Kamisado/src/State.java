@@ -24,21 +24,19 @@ public class State {
 	}
 
 	public Colour move(Player player, Colour previousColour, int turncount) {
-		start: System.out.println(player.getTeam());
-		System.out.println(previousColour);
+		
 		if (deadLockCheck(player, previousColour) == false) {
 			System.out.println(player.getTeam());
 			return board.getColour(board.getLastPieceX(player, previousColour),
 					board.getLastPieceY(player, previousColour));
 		}
-		System.out.println("Deadlock passed:");
 		if (turncount == 0) {
 
 			// wait for click
 
 			while (gui.canMove() == false) {
 				try {
-					TimeUnit.MILLISECONDS.sleep(250);
+					TimeUnit.MILLISECONDS.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -47,6 +45,7 @@ public class State {
 			int currposa = gui.getX();
 			int currposb = gui.getY();
 			gui.setCanMove(false);
+			gui.availableMoves(currposa,currposb,player);
 
 			// wait for click
 
@@ -80,9 +79,10 @@ public class State {
 			int currposb = board.getLastPieceY(player, previousColour);
 			System.out.println("(" + currposa + "," + currposb + ")");
 			gui.setCanMove(false);
+			gui.availableMoves(currposa,currposb,player);
 			while (gui.canMove() == false) {
 				try {
-					TimeUnit.MILLISECONDS.sleep(250);
+					TimeUnit.MILLISECONDS.sleep(20);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -167,7 +167,6 @@ public class State {
 
 			}
 		} else if (player.getTeam() == Colour.BLACK) {
-			System.out.println("shouldnt check here!");
 			if (currposb != 0 && currposb != 7
 					&& board.getPieceCell(currposa - 1, currposb).getPieceColour() != Colour.BLANK
 					&& board.getPieceCell(currposa - 1, currposb - 1).getPieceColour() != Colour.BLANK
@@ -271,7 +270,7 @@ public class State {
 			}
 			// Occupied for diag movement left
 			if (currposb > newposb) { // diag left
-				for (int i = 1; i <= newposa; i++) {
+				for (int i = 1; i <= newposa - currposa; i++) {
 					if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() != Colour.BLANK) {
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -282,7 +281,7 @@ public class State {
 			
 			// Occupied for diag movement right
 			if (currposb < newposb) { // diag right
-				for (int i = 1; i <= newposa; i++) {
+				for (int i = 1; i <= newposa - currposa; i++) {
 					if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() != Colour.BLANK) { // white
 						System.out.println(" Path Blocked by tower");
 						return false;

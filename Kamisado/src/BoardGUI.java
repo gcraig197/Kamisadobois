@@ -132,7 +132,7 @@ public class BoardGUI extends JFrame {
 			}
 		}
 
-		setSize(500, 500);
+		setSize(200, 200);
 		setResizable(false);
 		setVisible(true);
 		pack();

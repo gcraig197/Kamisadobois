@@ -10,12 +10,13 @@ import java.util.Scanner;
 public class GameDriver {
 	private State state;
 	private boolean speedgame;
-	int turncount;
-	Colour previousColour;
-	Player player1;
-	Player player2;
-	Player currPlayer;
-	Scanner sc;
+	private int turncount;
+	private Colour previousColour;
+	private Player player1;
+	private Player player2;
+	private Player currPlayer;
+	private Scanner sc;
+	private GameMenuGUI gm;
 	
 	
 	public static void main(String[] args) {
@@ -33,7 +34,6 @@ public class GameDriver {
 	}
 	
 	public void setup(){
-		System.out.println("Please enter the name for player 1");
 		String name = sc.nextLine();
 		if(name.isEmpty()){
 			player1.setName("player1");
@@ -43,7 +43,6 @@ public class GameDriver {
 		}
 		
 		
-		System.out.println("Please enter the name for player 2");
 	    name = sc.nextLine();
 		if(name.isEmpty()){
 			player2.setName("player2");

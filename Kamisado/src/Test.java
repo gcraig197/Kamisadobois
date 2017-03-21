@@ -1,22 +1,24 @@
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Test {
-public static void main(String[] args) {
-	Board board = new Board();
-	GUI gui = new GUI();
-	board.Setup();
-	board.printCurrentBoard();
-	board.move(0, 0, 5, 5);
-	System.out.println();
-	System.out.println();
-	board.printCurrentBoard();
+	public static void main(String[] args) throws IOException {
+		
+//		GameDriver game = new GameDriver();
+//		game.setup();
+//		game.play();
+		
+		GameDriver g = new GameDriver();
+		State s = new State(false);
+		s.save();
+		s.load();
+		s.printGame();
+		
+		
+		
+		//GameMenuGUI g = new GameMenuGUI();
+	}
 	
 	
-	
-	
-//	board.Setup();
-//	board.printCurrentBoard();
-	
-	
-}
+
 }

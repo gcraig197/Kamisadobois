@@ -1,28 +1,35 @@
-
-
 public class Piece {
-char team;
-Colour colour;
-	
-	public Piece(char team, Colour colour) {
-		this.colour = colour;
+	Colour pieceColour;
+	Colour team;
+
+	public Piece(Colour pieceColour, Colour team) {
+		this.pieceColour = pieceColour;
 		this.team = team;
+
 	}
 
-	public char getTeam() {
+	public Colour getPieceColour() {
+		return pieceColour;
+	}
+
+	public void setPieceColour(Colour pieceColour) {
+		this.pieceColour = pieceColour;
+	}
+
+	public Colour getTeam() {
 		return team;
-	}	
+	}
 
-	public void setTeam(char team) {
+	public void setTeam(Colour team) {
 		this.team = team;
 	}
-
-	public Colour getColour() {
-		return colour;
+	
+	public String stringRep(){
+	
+		return (""+this.pieceColour+" "+this.team);
+		
 	}
-
-	public void setColour(Colour colour) {
-		this.colour = colour;
-	}
+	
+	
 
 }

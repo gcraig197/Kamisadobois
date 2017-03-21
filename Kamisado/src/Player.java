@@ -1,16 +1,24 @@
-
-
+import java.util.Scanner;
 public class Player {
-public Player(Colour colour) {
-}
+	String name;
+	Colour team;
+	Scanner sc;
+	public Player() {
+		this.name = "default";
+		sc = new Scanner(System.in);
+	}
 
-public Board MakeMove(Board board){
-	// gui mouse click of piece 
-	return board;
-}
-
-public void interrupt(){
-	
-}
+	public void setName(String name){
+		this.name = name;
+	}
+	public String getName(){
+		return name;
+	}
+	public Colour getTeam(){
+		return team;
+	}
+	public void setTeam(Colour team){
+		this.team = team;
+	}
 
 }

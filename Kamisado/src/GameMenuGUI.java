@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,9 +17,10 @@ private JPanel jp;
 private JButton b;
 private JTextField textField1;
 private JTextField textField2;
+private JTextField choice;
 private JLabel l;
 private JLabel l2;
-private JComboBox cb;
+private JCheckBox checkbox;
 private boolean finished;
 
 
@@ -27,28 +29,45 @@ public static void main(String[] args) {
 	
 }
 	public GameMenuGUI(){
+		super("Game Setup");
 		finished = false;
 		jp = new JPanel();
 		jp.setLayout(null);
-		b = new JButton("Click me");
+		b = new JButton("Submit");
 		l = new JLabel("Player 1 Name:");
 		l2 = new JLabel("Player 2 Name:");
 		
-		b.setBounds(150,150,100,30);
+		JLabel label = new JLabel("White player name:");
+		JLabel label2 = new JLabel("Speedgame?");
+		choice = new JTextField();
+		checkbox = new JCheckBox();
+
+		
+		
+		
+		label.setBounds(250, 40, 250, 25);
+		label2.setBounds(250,70,100,25);
+		
+		checkbox.setBounds(330, 67, 30, 30);
+	
+		
+		b.setBounds(190,150,100,30);
 		b.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e){
-						newFrame();
+						finished = true;
+						dispose();
 					}
 		});
-		l.setBounds(50,10,200,100);
-		l2.setBounds(50, 60, 200, 100);
+		l.setBounds(20,3,200,100);
+		l2.setBounds(20, 40, 200, 100);
 		textField1 = new JTextField();
-		textField1.setBounds(150, 50, 100, 25);
+		textField1.setBounds(130, 40, 100, 25);
 		textField2 = new JTextField();
-		textField2.setBounds(150, 100, 100, 25);
+		textField2.setBounds(130, 80, 100, 25);
+		choice.setBounds(370, 40, 100, 25);
 		
-		setSize(500,300);
+		setSize(500,250);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
@@ -57,6 +76,10 @@ public static void main(String[] args) {
 		jp.add(textField1);
 		jp.add(textField2);
 		jp.add(b);
+		jp.add(checkbox);
+		jp.add(choice);
+		jp.add(label);
+		jp.add(label2);
 		
 		add(jp);
 		
@@ -72,42 +95,14 @@ public static void main(String[] args) {
 	}
 	
 	public String getWhitePlayer(){
-		return String.valueOf(cb.getSelectedItem());
+		return choice.getText();
+	}
+	
+	public boolean isSpeedGame(){
+		return checkbox.isSelected();
 	}
 	public boolean isFinished(){
 		return finished;
 	}
 	
-	public void newFrame(){
-		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-		JButton button = new JButton("Click me");
-		JLabel label = new JLabel("Please select the Player who will be white");
-		panel.setLayout(null);
-		frame.setSize(500,300);
-		frame.setResizable(false);
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
-		dispose();
-		String[] choices = {getPlayer1Name(),getPlayer2Name()};
-		
-		cb = new JComboBox<>(choices);
-		cb.setBounds(150, 30, 100, 25);
-		
-		button.setBounds(150, 150, 100, 30);
-		button.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e){
-						    finished = true;
-							frame.dispose();
-		}
-				});
-		
-		label.setBounds(100, 10, 250, 25);
-		
-		panel.add(button);
-		panel.add(cb);
-		panel.add(label);
-		frame.add(panel);
-	}
 }

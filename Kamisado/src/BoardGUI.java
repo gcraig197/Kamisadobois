@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JMenuItem;
 
 public class BoardGUI extends JFrame {
 	private Container contents;
@@ -19,24 +24,22 @@ public class BoardGUI extends JFrame {
 	private int y = 0;
 	private boolean canMove = false;
 	private ButtonHandler bh;
+	private JMenuBar menubar;
+	private JMenu menu;
+	private JMenuItem quit;
+	private JMenuItem save;
 
-	public static void main(String[] args) {
-		Board board = new Board();
-		board.Setup();
-		BoardGUI b = new BoardGUI(board);
-		b.refresh(board);
-		b.storeX(-1);
-		b.storeY(-1);
-		System.out.println("(" + b.getX() + "," + b.getY() + ")");
-
-	}
 
 	public BoardGUI(Board board) {
 		this.board = board;
 		contents = getContentPane();
 		contents.setLayout(new GridLayout(8, 8));
 		bh = new ButtonHandler();
-
+		menubar = new JMenuBar();
+		menu = new JMenu("File");
+		quit = new JMenuItem("Quit");
+		save = new JMenuItem("Save");
+		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				buttons[i][j] = new JButton();
@@ -155,9 +158,21 @@ public class BoardGUI extends JFrame {
 			}
 		}
 
-		setSize(800, 800);
+		setSize(1000, 1000);
 		setResizable(false);
 		setVisible(true);
+		menu.add(save);
+		quit.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e){
+						System.exit(0);
+					}
+
+					
+				});
+		menu.add(quit);
+		menubar.add(menu);
+		setJMenuBar(menubar);
 		pack();
 
 	}
@@ -382,7 +397,8 @@ public class BoardGUI extends JFrame {
 							break;
 						}
 					}
-					if ((currposb + i) <= 7 && (currposa + i) <= 7 && board.getColour(i, currposb) == Colour.BROWN) {
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.BROWN) {
 						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
 							buttons[currposa + i][currposb + i].setBackground(Color.black.darker().darker().darker());
 						} else {
@@ -396,7 +412,7 @@ public class BoardGUI extends JFrame {
 
 				// Black Vertical
 
-				for (int i = currposa - 1; i > 0; i--) {
+				for (int i = currposa - 1; i >= 0; i--) {
 					if (board.getColour(i, currposb) == Colour.ORANGE) {
 						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
 							buttons[i][currposb].setBackground(Color.ORANGE.darker().darker().darker());

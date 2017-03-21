@@ -18,6 +18,7 @@ public class GameDriver {
 	private Player currPlayer;
 	private Scanner sc;
 	private GameMenuGUI gm;
+	private GameOverGUI gameover;
 	
 	
 	public static void main(String[] args) {
@@ -31,6 +32,7 @@ public class GameDriver {
 		sc = new Scanner(System.in);
 		turncount = 0;
 		previousColour = Colour.BLANK;
+		speedgame = false;
 		
 	}
 	
@@ -64,7 +66,7 @@ public class GameDriver {
 		
 		System.out.println("please enter the name of the player that will be white");
 		String wplayer = gm.getWhitePlayer();
-		if(wplayer.equals(player2.getName())){
+		if(wplayer.trim().toLowerCase().equals(player2.getName().trim().toLowerCase())){
 			String swap = player2.getName();
 			player2.setName(player1.getName());
 			player1.setName(swap);
@@ -73,14 +75,11 @@ public class GameDriver {
 		player2.setTeam(Colour.BLACK);
 		
 		
-		System.out.println("Do you want to play a speedgame? Y/N");
-		String input = sc.nextLine();
-		if(input.toLowerCase().equals("y")){
-			speedgame = true;
+		speedgame = gm.isSpeedGame();
+		if(speedgame == true){
 			this.state = new State(speedgame);
 		}
 		else{
-			speedgame = false;
 			  this.state = new State(speedgame);
 		}
 		
@@ -137,8 +136,7 @@ public class GameDriver {
 			state.printGame();
 
 			}
-		System.out.println(currPlayer.getName() + " Wins the game!!!!!!!");
-		System.exit(0);
+		gameover = new GameOverGUI(currPlayer);
 	}
 	
 	

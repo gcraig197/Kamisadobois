@@ -70,6 +70,7 @@ public class State {
 			}
 
 			else {
+				gui.refresh(board);
 				gui.setCanMove(false);
 				previousColour = move(player, previousColour, turncount);
 			}

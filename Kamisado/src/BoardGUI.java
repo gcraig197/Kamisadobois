@@ -60,7 +60,7 @@ public class BoardGUI extends JFrame {
 					buttons[i][j].setBackground(Color.GREEN);
 				} else {
 					buttons[i][j].setBackground(new Color(160, 82, 45));
-					
+
 				}
 			}
 		}
@@ -68,7 +68,7 @@ public class BoardGUI extends JFrame {
 	}
 
 	public void refresh(Board board) {
-		
+
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (board.getColour(i, j) == Colour.ORANGE) {
@@ -87,7 +87,7 @@ public class BoardGUI extends JFrame {
 					buttons[i][j].setBackground(Color.GREEN);
 				} else {
 					buttons[i][j].setBackground(new Color(160, 82, 45));
-					
+
 				}
 			}
 		}
@@ -159,7 +159,7 @@ public class BoardGUI extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		pack();
-		
+
 	}
 
 	public void storeX(int x) {
@@ -177,117 +177,445 @@ public class BoardGUI extends JFrame {
 	public int getY() {
 		return y;
 	}
-	
-	public void setCanMove(boolean canMove){
+
+	public void setCanMove(boolean canMove) {
 		this.canMove = canMove;
 	}
 
-	public boolean canMove(){
+	public boolean canMove() {
 		return canMove;
 	}
-	
+
 	public void availableMoves(int currposa, int currposb, Player player) {
-		if (player.getTeam() == Colour.WHITE) {
-			
-			// White Vertical	
-			for (int i = currposa + 1; i < 8; i++) {
-					if(board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK){
-						buttons[i][currposb].setBackground(Color.lightGray);
+		if (board.getPieceCell(currposa, currposb).getPieceColour() != Colour.BLANK) {
+
+			if (player.getTeam() == Colour.WHITE) {
+
+				// White Vertical
+
+				for (int i = currposa + 1; i < 8; i++) {
+					if (board.getColour(i, currposb) == Colour.ORANGE) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.ORANGE.darker().darker().darker());
+						} else {
+							break;
+						}
 					}
-					else{
-						break;
+					if (board.getColour(i, currposb) == Colour.LBLUE) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.CYAN.darker().darker().darker());
+						} else {
+							break;
+						}
 					}
-			}
-			
-			// White Left Diagonal
-			
-			for (int i = 1; i < 8; i++) {
-				if ((currposb - i) >= 0) {
-					if(board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK ){
-						buttons[currposa + i][currposb - i].setBackground(Color.lightGray);
-					} 
-					else{
-						break;
+					if (board.getColour(i, currposb) == Colour.DBLUE) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.BLUE.darker().darker().darker());
+						} else {
+							break;
+						}
 					}
+					if (board.getColour(i, currposb) == Colour.PINK) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.PINK.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.YELLOW) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.YELLOW.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.RED) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.RED.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.GREEN) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.GREEN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.BROWN) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.black.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+
 				}
-				
+
+				// White Left Diagonal
+
+				for (int i = 1; i < 8; i++) {
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.ORANGE) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.ORANGE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.LBLUE) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.CYAN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.DBLUE) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.BLUE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.PINK) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.PINK.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.YELLOW) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.YELLOW.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.RED) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.RED.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.GREEN) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.GREEN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb - i) == Colour.BROWN) {
+						if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb - i].setBackground(Color.black.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+
+				}
+
+				// White Right Diagonal
+
+				for (int i = 1; i < 8; i++) {
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.ORANGE) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.ORANGE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.LBLUE) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.CYAN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.DBLUE) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.BLUE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.PINK) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.PINK.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.YELLOW) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.YELLOW.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.RED) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.RED.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa + i) <= 7
+							&& board.getColour(currposa + i, currposb + i) == Colour.GREEN) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.GREEN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa + i) <= 7 && board.getColour(i, currposb) == Colour.BROWN) {
+						if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa + i][currposb + i].setBackground(Color.black.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+
+				}
+
+			} else if (player.getTeam() == Colour.BLACK) {
+
+				// Black Vertical
+
+				for (int i = currposa - 1; i > 0; i--) {
+					if (board.getColour(i, currposb) == Colour.ORANGE) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.ORANGE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.LBLUE) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.CYAN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.DBLUE) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.BLUE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.PINK) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.PINK.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.YELLOW) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.YELLOW.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.RED) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.RED.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.GREEN) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.GREEN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if (board.getColour(i, currposb) == Colour.BROWN) {
+						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
+							buttons[i][currposb].setBackground(Color.BLACK.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+
+				}
+
+				// Black Left Diagonal
+
+				for (int i = 1; i < 8; i++) {
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.ORANGE) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.ORANGE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.LBLUE) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.CYAN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.DBLUE) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.BLUE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.PINK) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.PINK.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.YELLOW) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.YELLOW.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.RED) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.RED.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.GREEN) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.GREEN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb - i) >= 0 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb - i) == Colour.BROWN) {
+						if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb - i].setBackground(Color.black.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+
+				}
+
+				// Black Right Diagonal
+
+				for (int i = 1; i < 8; i++) {
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.ORANGE) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.ORANGE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.LBLUE) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.CYAN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.DBLUE) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.BLUE.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.PINK) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.PINK.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.YELLOW) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.YELLOW.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.RED) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.RED.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.GREEN) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.GREEN.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+					if ((currposb + i) <= 7 && (currposa - i) >= 0
+							&& board.getColour(currposa - i, currposb + i) == Colour.BROWN) {
+						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
+							buttons[currposa - i][currposb + i].setBackground(Color.black.darker().darker().darker());
+						} else {
+							break;
+						}
+					}
+
+				}
 
 			}
-			
-			// White Right Diagonal
-			
-			for (int i = 1; i < 8; i++) {
-				if ((currposb + i) <= 7) {
-					if(board.getPieceCell(currposa + i, currposb + i).getPieceColour() == Colour.BLANK ){
-						buttons[currposa + i][currposb + i].setBackground(Color.lightGray);
-					} 
-					else{
-						break;
-					}
-				}
-
-			}
-			
-			
-		} else if(player.getTeam() == Colour.BLACK) {
-			
-			// Black Vertical
-			
-			for (int i = currposa - 1; i > 0; i--) {
-				if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
-					buttons[i][currposb].setBackground(Color.lightGray);
-				}
-				else{
-					break;
-				}
-			}
-			
-			//Black Left Diagonal
-			
-			for (int i = 1; i < 8; i++) {
-				if ((currposb - i) >= 0) {
-					if(board.getPieceCell(currposa - i, currposb - i).getPieceColour() == Colour.BLANK ){
-						buttons[currposa - i][currposb - i].setBackground(Color.lightGray);
-					} 
-					else{
-						break;
-					}
-				}
-
-			}
-			
-			// Black Right Diagonal 
-			
-			for (int i = 1; i < 8; i++) {
-				if ((currposb + i) <= 7) {
-					if(board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK ){
-						buttons[currposa - i][currposb + i].setBackground(Color.lightGray);
-					} 
-					else{
-						break;
-					}
-				}
-			}
-
 		}
+
 	}
-	
-	
+
 	private class ButtonHandler implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			
+
 			Object x = e.getSource();
 			outerloop: for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
-					if(x == buttons[i][j]){
+					if (x == buttons[i][j]) {
 						System.out.println("(" + i + "," + j + ")");
 						storeX(i);
 						storeY(j);
 						setCanMove(true);
 						break outerloop;
-				}	
-			
+					}
+
 				}
 			}
 		}

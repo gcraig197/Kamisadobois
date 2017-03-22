@@ -7,15 +7,17 @@
  *
  */
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 public class GameDriver {
 	private State state;
 	private boolean speedgame;
-	int turncount;
-	Colour previousColour;
-	Player player1;
-	Player player2;
-	Player currPlayer;
-	Scanner sc;
+	private int turncount;
+	private Colour previousColour;
+	private Player player1;
+	private Player player2;
+	private Player currPlayer;
+	private Scanner sc;
+	private GameMenuGUI gm;
 	
 	
 	public static void main(String[] args) {
@@ -33,8 +35,17 @@ public class GameDriver {
 	}
 	
 	public void setup(){
-		System.out.println("Please enter the name for player 1");
-		String name = sc.nextLine();
+		gm = new GameMenuGUI();
+		while(gm.isFinished() == false){
+			try {
+				TimeUnit.MILLISECONDS.sleep(250);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		String name = gm.getPlayer1Name();
 		if(name.isEmpty()){
 			player1.setName("player1");
 		}
@@ -43,8 +54,7 @@ public class GameDriver {
 		}
 		
 		
-		System.out.println("Please enter the name for player 2");
-	    name = sc.nextLine();
+	    name = gm.getPlayer2Name();
 		if(name.isEmpty()){
 			player2.setName("player2");
 		}
@@ -53,7 +63,7 @@ public class GameDriver {
 		}
 		
 		System.out.println("please enter the name of the player that will be white");
-		String wplayer = sc.nextLine();
+		String wplayer = gm.getWhitePlayer();
 		if(wplayer.equals(player2.getName())){
 			String swap = player2.getName();
 			player2.setName(player1.getName());
@@ -73,6 +83,7 @@ public class GameDriver {
 			speedgame = false;
 			  this.state = new State(speedgame);
 		}
+		
 		
 	}
 	
@@ -113,13 +124,13 @@ public class GameDriver {
 				else{
 					System.out.println("Move your " + previousColour + " piece.");
 				}
-				previousColour = state.move(player1, previousColour);
+				previousColour = state.move(player1, previousColour,turncount);
 			}
 			else {
 				currPlayer = player2;
 				System.out.println(currPlayer.getName() + " make your move!");
 				System.out.println("Move your " + previousColour + " piece.");
-				previousColour = state.move(player2, previousColour);
+				previousColour = state.move(player2, previousColour,turncount);
 			}
 		
 			turncount++;
@@ -127,6 +138,7 @@ public class GameDriver {
 
 			}
 		System.out.println(currPlayer.getName() + " Wins the game!!!!!!!");
+		System.exit(0);
 	}
 	
 	

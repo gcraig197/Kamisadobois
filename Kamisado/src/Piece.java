@@ -1,4 +1,3 @@
-
 public class Piece {
 	Colour pieceColour;
 	Colour team;
@@ -23,6 +22,12 @@ public class Piece {
 
 	public void setTeam(Colour team) {
 		this.team = team;
+	}
+	
+	public String stringRep(){
+	
+		return (""+this.pieceColour+" "+this.team);
+		
 	}
 	
 	

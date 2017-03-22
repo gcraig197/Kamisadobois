@@ -1,4 +1,5 @@
 
+
 public class Board {
 	private Colour[][] boardGrid;
 	private Piece [][] pieceGrid;
@@ -192,6 +193,28 @@ public class Board {
 			}
 		}
 		return currposb;
+	}
+	
+	public int getPieceX(Piece piece){
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(getPieceCell(i, j) == piece){
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	public int getPieceY(Piece piece){
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(getPieceCell(i, j) == piece){
+					return j;
+				}
+			}
+		}
+		return -1;
 	}
 }
 

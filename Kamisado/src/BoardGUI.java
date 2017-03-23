@@ -11,9 +11,11 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JMenuItem;
 
 public class BoardGUI extends JFrame {
@@ -28,17 +30,33 @@ public class BoardGUI extends JFrame {
 	private JMenu menu;
 	private JMenuItem quit;
 	private JMenuItem save;
-
+	private JMenuItem load;
+	private JMenuItem undo;
+	private JMenu menu2;
+	private JMenuItem moves;
+	private boolean s;
+	private boolean l;
+	private boolean u;
+	private boolean m;
 
 	public BoardGUI(Board board) {
 		this.board = board;
+		s = false;
+		l = false;
+		u = false;
+		m = false;
+		
 		contents = getContentPane();
 		contents.setLayout(new GridLayout(8, 8));
 		bh = new ButtonHandler();
 		menubar = new JMenuBar();
 		menu = new JMenu("File");
+		menu2 = new JMenu("Options");
 		quit = new JMenuItem("Quit");
 		save = new JMenuItem("Save");
+		load = new JMenuItem("Load");
+		undo = new JMenuItem("Undo");
+		moves = new JMenuItem("Type manual move");
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -161,7 +179,34 @@ public class BoardGUI extends JFrame {
 		setSize(1000, 1000);
 		setResizable(false);
 		setVisible(true);
+		
+		moves.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e){
+				 m = true;
+				 makePopUpFrame();
+			}
+		});
+		
+		save.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e){
+						s = true;
+					}
+				});
 		menu.add(save);
+		load.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				l = true;
+			}
+		});
+		menu.add(load);
+		undo.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				u = true;
+			}
+		});
+		menu2.add(undo);
 		quit.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e){
@@ -171,7 +216,9 @@ public class BoardGUI extends JFrame {
 					
 				});
 		menu.add(quit);
+		menu2.add(moves);
 		menubar.add(menu);
+		menubar.add(menu2);
 		setJMenuBar(menubar);
 		pack();
 
@@ -200,7 +247,45 @@ public class BoardGUI extends JFrame {
 	public boolean canMove() {
 		return canMove;
 	}
-
+	
+	public boolean canSave(){
+		return s;
+	}
+	public void setCanSave(boolean s){
+		this.s = s;
+	}
+	public boolean canUndo(){
+		return u;
+	}
+	public void setCanUndo(boolean u){
+		this.u = u;
+	}
+	public boolean canLoad(){
+		return l;
+	}
+	public void setCanLoad(boolean l){
+		this.l = l;
+	}
+	public boolean canMakeMove(){
+		return m;
+	}
+	public void setMakeMove(boolean m){
+		this.m = m;
+	}
+	public void makePopUpFrame(){
+		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		JLabel label = new JLabel("Enter the coordinaes ");
+		JTextField textbox = new JTextField();
+		panel.setLayout(null);
+		label.setBounds(30, 30, 200, 30);
+		panel.add(label);
+		frame.add(panel);
+		frame.setSize(300, 200);
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+	}
 	public void availableMoves(int currposa, int currposb, Player player) {
 		if (board.getPieceCell(currposa, currposb).getPieceColour() != Colour.BLANK) {
 

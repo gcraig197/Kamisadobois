@@ -59,7 +59,7 @@ public class StartMenuGUI extends JFrame{
 		
 		
 		
-		setSize(300,300);
+		setSize(300,230);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(false);

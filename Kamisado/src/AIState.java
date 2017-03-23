@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class State {
+public class AIState {
 	private boolean finished;
 	private Board board;
 	private Boolean deadlockFlag;
@@ -13,8 +13,8 @@ public class State {
 	private BoardGUI gui;
 	private SaveManager save;
 	private Colour lastColour;
-	
-	public State(boolean speedgame) {
+
+	public AIState(boolean speedgame) {
 		finished = false;
 		board = new Board();
 		board.Setup();
@@ -24,106 +24,151 @@ public class State {
 		gui.refresh(board);
 		save = new SaveManager();
 		lastColour = Colour.BLANK;
-		save.saveBoard(board,lastColour);
+		save.saveBoard(board, lastColour);
 
 	}
 
 	public void printGame() {
 		board.printCurrentBoard();
 	}
-	
-	
 
 	public Colour move(Player player, Colour previousColour, int turncount) {
-		
-		save.saveBoard(board,previousColour);
-		
-			
+	
+		System.out.println(turncount);
+		System.out.println(previousColour);
+		printGame();
 		
 		if (deadLockCheck(player, previousColour) == false) {
 			System.out.println(player.getTeam());
 			return board.getColour(board.getLastPieceX(player, previousColour),
-					board.getLastPieceY(player, lastColour));
+					board.getLastPieceY(player, previousColour));
 		}
+
+			if (turncount == 0) {
+
+				// wait for click
+
+				while (gui.canMove() == false) {
+					try {
+						TimeUnit.MILLISECONDS.sleep(20);
+						if(gui.canSave()){
+							save();
+							gui.setCanSave(false);
+						}
+						if(gui.canUndo()){
+							undo();
+							undoColour();
+							gui.refresh(board);
+							gui.setCanUndo(false);
+							previousColour = move(player, lastColour, turncount - 2);
+						}
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				int currposa = gui.getX();
+				int currposb = gui.getY();
+				gui.setCanMove(false);
+				gui.availableMoves(currposa, currposb, player);
+
+				// wait for click
+
+				while (gui.canMove() == false) {
+					try {
+						TimeUnit.MILLISECONDS.sleep(20);
+						if(gui.canSave()){
+							save();
+							gui.setCanSave(false);
+						}
+						if(gui.canUndo()){
+							undo();
+							undoColour();
+							previousColour = move(player, lastColour, turncount - 2);
+						}
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				int newposa = gui.getX();
+				int newposb = gui.getY();
+				if (movelegality(player, currposa, currposb, newposa, newposb, previousColour)) {
+					save.saveBoard(board, previousColour);
+					board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
+
+					board.setPieceCell(currposa, currposb, board.getBlankPiece());
+					deadlockFlag = false;
+					gui.refresh(board);
+					gui.setCanMove(false);
+
+					return board.getColour(newposa, newposb);
+				}
+
+				else {
+					gui.refresh(board);
+					gui.setCanMove(false);
+					previousColour = move(player, previousColour, turncount);
+				}
+			} else {
+
+				int currposa = board.getLastPieceX(player, previousColour);
+				int currposb = board.getLastPieceY(player, previousColour);
+				System.out.println("(" + currposa + "," + currposb + ")");
+				gui.setCanMove(false);
+				gui.availableMoves(currposa, currposb, player);
+				
+				//Wait for Click
+				
+				while (gui.canMove() == false) {
+					try {
+						TimeUnit.MILLISECONDS.sleep(20);
+						if(gui.canSave()){
+							save();
+							gui.setCanSave(false);
+						}
+						if(gui.canUndo()){
+							undo();
+							undoColour();
+							gui.setCanUndo(false);
+							gui.refresh(board);
+							previousColour = move(player, lastColour, turncount - 2);
+						}
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				int newposa = gui.getX();
+				int newposb = gui.getY();
+
+				if (movelegality(player, currposa, currposb, newposa, newposb, previousColour)) {
+					save.saveBoard(board, previousColour);
+					board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
+					board.setPieceCell(currposa, currposb, board.getBlankPiece());
+					deadlockFlag = false;
+					gui.refresh(board);
+					gui.setCanMove(false);
+					return board.getColour(newposa, newposb);
+				}
+
+				else {
+					gui.setCanMove(false);
+					previousColour = move(player, previousColour, turncount);
+				}
+			}
 		
-		if (turncount == 0) {
 
-			// wait for click
-
-			while (gui.canMove() == false) {
-				try {
-					TimeUnit.MILLISECONDS.sleep(20);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			int currposa = gui.getX();
-			int currposb = gui.getY();
-			gui.setCanMove(false);
-			gui.availableMoves(currposa,currposb,player);
-
-			// wait for click
-
-			while (gui.canMove() == false) {
-				try {
-					TimeUnit.MILLISECONDS.sleep(20);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			int newposa = gui.getX();
-			int newposb = gui.getY();
-			if (movelegality(player, currposa, currposb, newposa, newposb, previousColour)) {
-				board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
-
-				board.setPieceCell(currposa, currposb, board.getBlankPiece());
-				deadlockFlag = false;
-				gui.refresh(board);
-				gui.setCanMove(false);
-				return board.getColour(newposa, newposb);
-			}
-
-			else {
-				gui.refresh(board);
-				gui.setCanMove(false);
-				previousColour = move(player, previousColour, turncount);
-			}
-		} else {
-
-			int currposa = board.getLastPieceX(player, previousColour);
-			int currposb = board.getLastPieceY(player, previousColour);
-			System.out.println("(" + currposa + "," + currposb + ")");
-			gui.setCanMove(false);
-			gui.availableMoves(currposa,currposb,player);
-			while (gui.canMove() == false) {
-				try {
-					TimeUnit.MILLISECONDS.sleep(20);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			int newposa = gui.getX();
-			int newposb = gui.getY();
-
-			if (movelegality(player, currposa, currposb, newposa, newposb, previousColour)) {
-				board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
-
-				board.setPieceCell(currposa, currposb, board.getBlankPiece());
-				deadlockFlag = false;
-				gui.refresh(board);
-				gui.setCanMove(false);
-				return board.getColour(newposa, newposb);
-			}
-
-			else {
-				gui.setCanMove(false);
-				previousColour = move(player, previousColour, turncount);
-			}
-		}
-
+		
 		return previousColour;
 	}
 
@@ -295,7 +340,7 @@ public class State {
 
 				}
 			}
-			
+
 			// Occupied for diag movement right
 			if (currposb < newposb) { // diag right
 				for (int i = 1; i <= newposa - currposa; i++) {
@@ -333,7 +378,7 @@ public class State {
 
 				}
 			}
-			
+
 			// Occupied for diag movement left
 			if (currposb > newposb) { // diag left
 				for (int i = 1; i <= currposa - newposa; i++) {
@@ -344,7 +389,7 @@ public class State {
 
 				}
 			}
-			
+
 			// Occupied for diag movement right
 			if (currposb < newposb) { // diag right
 				for (int i = 1; i <= currposa - newposa; i++) {
@@ -355,8 +400,6 @@ public class State {
 
 				}
 			}
-
-
 
 		}
 
@@ -379,93 +422,90 @@ public class State {
 		}
 		return null;
 	}
-	
-	public Colour computeAIMove(AIPlayer player,Colour previousColour){
+
+	public Colour computeAIMove(AIPlayer player, Colour previousColour) {
 		Random rng = new Random();
 		ArrayList<AImove> array = new ArrayList<AImove>();
 
-		
 		int currposa = board.getLastPieceX(player, previousColour);
 		int currposb = board.getLastPieceY(player, previousColour);
 		Piece p = board.getPieceCell(currposa, currposb);
-		
-		outer:
-		if (player.getDifficulty().toLowerCase().equals("easy")) {
+
+		outer: if (player.getDifficulty().toLowerCase().equals("easy")) {
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (movelegality(player, currposa, currposb, i, j, previousColour)) {
 						AImove move = new AImove(i, j);
 						array.add(move);
-						if (i == 0) { //can win
+						if (i == 0) { // can win
 							board.setPieceCell(i, j, p);
 							previousColour = board.getColour(i, j);
-							board.setPieceCell(currposa,currposb,board.getBlankPiece());
+							board.setPieceCell(currposa, currposb, board.getBlankPiece());
 							lastColour = previousColour;
 							gui.refresh(board);
 							break outer;
 						}
-						
-				
+
 					}
-					
+
 				}
 			}
-			
-			AImove	aimove = array.get(rng.nextInt(array.size()));
-			board.setPieceCell(aimove.getI(),aimove.getJ(),p );
-			board.setPieceCell(currposa,currposb,board.getBlankPiece());
+
+			AImove aimove = array.get(rng.nextInt(array.size()));
+			board.setPieceCell(aimove.getI(), aimove.getJ(), p);
+			board.setPieceCell(currposa, currposb, board.getBlankPiece());
 			gui.refresh(board);
 			previousColour = board.getColour(aimove.getI(), aimove.getJ());
 			lastColour = previousColour;
-			//move 
-			//aimove.getApos();
-			//aimove.getBpos();
-			
+			// move
+			// aimove.getApos();
+			// aimove.getBpos();
+
 		}
-		
-		outer:
-			if (player.getDifficulty().toLowerCase().equals("hard")) {
+
+		outer: if (player.getDifficulty().toLowerCase().equals("hard")) {
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (movelegality(player, currposa, currposb, i, j, previousColour)) {
 						AImove move = new AImove(i, j);
 						array.add(move);
-						if (i == 0) { //can win
+						if (i == 0) { // can win
 							board.setPieceCell(i, j, p);
 							break outer;
 						}
-						
-				
+
 					}
-					
+
 				}
 			}
-			
-			AImove	aimove = array.get(rng.nextInt(array.size()));
-			board.setPieceCell(aimove.getI(),aimove.getJ(),p );
-			//move 
-			//aimove.getApos();
-			//aimove.getBpos();
-			
+
+			AImove aimove = array.get(rng.nextInt(array.size()));
+			board.setPieceCell(aimove.getI(), aimove.getJ(), p);
+			// move
+			// aimove.getApos();
+			// aimove.getBpos();
+
 		}
 		return previousColour;
-		
-}
-	
-	public void save() throws FileNotFoundException{
-		save.save();
-		
+
 	}
-	
-	public void load() throws IOException{
+
+	public void save() throws FileNotFoundException {
+		save.save();
+
+	}
+
+	public void load() throws IOException {
 		board = save.load();
 		lastColour = save.loadLastColour();
 	}
-	public void undo(){
-		board = save.undo();
-		
+
+	public void undo() {
+		board.setPieceGrid(save.undo().getPieceGrid()); 
+
 	}
-	public void undoColour(){
+
+	public void undoColour() {
 		lastColour = save.undoColour();
 	}
 	
@@ -473,11 +513,5 @@ public class State {
 		return gui;
 	}
 	
-	public Board getBoard(){
-		return board;
-	}
-	public void setBoard(Board board){
-		this.board = board;
-	}
-
+	
 }

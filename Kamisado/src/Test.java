@@ -8,11 +8,27 @@ public class Test {
 		//game.setup();
 		//game.play();
 		
-		GameDriver g = new GameDriver();
-		State s = new State(false);
-		s.save();
-		s.load();
-		s.printGame();
+//		GameDriver g = new GameDriver();
+//		State s = new State(false);
+//		s.save();
+//		s.load();
+//		s.printGame();
+		
+		
+//		AIState state = new AIState(false);
+	
+		
+		Board board = new Board();
+		board.Setup();
+		board.printCurrentBoard();
+		Board board2 = new Board();
+		board2.setUpDeadlock();
+		board2.printCurrentBoard();
+		
+		board.setPieceGrid(board2.getPieceGrid());
+		board.printCurrentBoard();
+		
+		
 		
 		//GameMenuGUI g = new GameMenuGUI();
 	}

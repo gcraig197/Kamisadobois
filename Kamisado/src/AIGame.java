@@ -9,8 +9,10 @@
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+
+import com.sun.xml.internal.ws.api.Cancelable;
 public class AIGame {
-	private State state;
+	private AIState state;
 	private boolean speedgame;
 	private int turncount;
 	private Colour previousColour;
@@ -60,10 +62,10 @@ public class AIGame {
 		
 		speedgame = gm.isSpeedGame();
 		if(speedgame == true){
-			this.state = new State(speedgame);
+			this.state = new AIState(speedgame);
 		}
 		else{
-			  this.state = new State(speedgame);
+			  this.state = new AIState(speedgame);
 		}
 		
 		
@@ -106,6 +108,7 @@ public class AIGame {
 				else{
 					System.out.println("Move your " + previousColour + " piece.");
 				}
+				
 				previousColour = state.move(player1, previousColour,turncount);
 			}
 			else {

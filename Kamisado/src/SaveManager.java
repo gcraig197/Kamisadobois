@@ -14,8 +14,8 @@ public class SaveManager {
 	File out;
 
 	public SaveManager() {
-		stack = new Stack();
-		colStack = new Stack();
+		stack = new Stack<Board>();
+		colStack = new Stack<Colour>();
 		out = new File("src/out");
 	}
 
@@ -27,6 +27,7 @@ public class SaveManager {
 
 	public Board undo() {
 		return stack.pop();
+
 	}
 	public Colour undoColour(){
 		return colStack.pop();

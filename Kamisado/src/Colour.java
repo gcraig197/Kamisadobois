@@ -9,7 +9,10 @@ public enum Colour {
 	YELLOW,
 	RED,
 	GREEN,
-	BROWN;
+	BROWN,
 	
+	WHITE,	// Should we specify player colour to be char similar to how pieces are identified?
+	BLACK,
+	BLANK;
 	
 }

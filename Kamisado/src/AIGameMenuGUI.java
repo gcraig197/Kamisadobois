@@ -20,6 +20,8 @@ private JTextField textField1;
 private JLabel l;
 private JCheckBox checkbox;
 private boolean finished;
+private JLabel d;
+private JComboBox difficulty;
 
 
 public static void main(String[] args) {
@@ -33,9 +35,12 @@ public static void main(String[] args) {
 		jp.setLayout(null);
 		b = new JButton("Submit");
 		l = new JLabel("Player 1 Name:");
+		d = new JLabel("Difficulty");
 		
 		JLabel label2 = new JLabel("Speedgame?");
 		checkbox = new JCheckBox();
+		String[] difficulties = {"Easy","Hard"};
+		difficulty = new JComboBox(difficulties);
 
 		
 		
@@ -61,9 +66,15 @@ public static void main(String[] args) {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
+		d.setBounds(60, 100, 100 , 25);
+		
+		difficulty.setBounds(130, 100, 100, 25);
+		
 		jp.add(l);
 		jp.add(textField1);
 		jp.add(b);
+		jp.add(d);
+		jp.add(difficulty);
 		jp.add(checkbox);
 		jp.add(label2);
 		

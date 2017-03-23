@@ -20,6 +20,7 @@ public class SaveManager {
 	}
 
 	public void saveBoard(Board board,Colour lastColour) {
+		System.out.println("!!!!!!!!!!!YOU HAVE SAVED SOMETHING TO THE STACK!!!!!!!!!!!!!");
 		stack.push(board);
 		colStack.push(lastColour);
 
@@ -28,6 +29,10 @@ public class SaveManager {
 	public Board undo() {
 		return stack.pop();
 
+	}
+	
+	public Board peek(){
+		return stack.peek();
 	}
 	public Colour undoColour(){
 		return colStack.pop();

@@ -110,16 +110,22 @@ public class AIGame {
 				}
 				
 				previousColour = state.move(player1, previousColour,turncount);
+				System.out.println("broke out of state");
 			}
 			else {
 				currPlayer = player2;
 				System.out.println(currPlayer.getName() + " make your move!");
 				System.out.println("Move your " + previousColour + " piece.");
-				previousColour = state.computeAIMove(player2, previousColour);
+				if(player2.getDifficulty().equals("easy")){
+				previousColour = state.computeAIMove(player2, player1, previousColour);
+				}
+				else if (player2.getDifficulty().equals("hard")){
+					previousColour = state.hardAIMove(player2, player1, previousColour);
+				}
 			}
 		
 			turncount++;
-			state.printGame();
+		
 
 			}
 		gameover = new GameOverGUI(currPlayer);

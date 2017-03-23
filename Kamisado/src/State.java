@@ -11,7 +11,7 @@ public class State {
 	private Boolean deadlockFlag;
 	private Scanner sc;
 	private BoardGUI gui;
-	private SaveManager save;
+	
 	private Colour lastColour;
 	
 	public State(boolean speedgame) {
@@ -22,9 +22,8 @@ public class State {
 		deadlockFlag = false;
 		gui = new BoardGUI(board);
 		gui.refresh(board);
-		save = new SaveManager();
 		lastColour = Colour.BLANK;
-		save.saveBoard(board,lastColour);
+	
 
 	}
 
@@ -36,7 +35,7 @@ public class State {
 
 	public Colour move(Player player, Colour previousColour, int turncount) {
 		
-		save.saveBoard(board,previousColour);
+		
 		
 			
 		
@@ -452,23 +451,6 @@ public class State {
 		
 }
 	
-	public void save() throws FileNotFoundException{
-		save.save();
-		
-	}
-	
-	public void load() throws IOException{
-		board = save.load();
-		lastColour = save.loadLastColour();
-	}
-	public void undo(){
-		board = save.undo();
-		
-	}
-	public void undoColour(){
-		lastColour = save.undoColour();
-	}
-	
 	public BoardGUI getGUI(){
 		return gui;
 	}
@@ -481,3 +463,4 @@ public class State {
 	}
 
 }
+

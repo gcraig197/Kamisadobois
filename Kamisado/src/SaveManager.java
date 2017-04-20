@@ -1,16 +1,205 @@
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.Stack;
+import java.io.Writer;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 public class SaveManager {
-public SaveManager() {
-	// TODO Auto-generated constructor stub
-}
+	Stack<Board> stack;
+	Stack<Board> saves;
+	Stack<Colour>  colStack;
+	File out;
+	Colour colour;
+	int turncount;
 
-public void save(State s){
+	public SaveManager() {
+		stack = new Stack<Board>();
+		colStack = new Stack<Colour>();
+		saves = new Stack<Board>();
+		out = new File("src/out");
+		colour = Colour.BLANK;
+		turncount = 0;
+		
+	}
+
+	public void saveBoard(Board board,Colour lastColour) {
+		System.out.println("!!!!!!!!!!!YOU HAVE SAVED SOMETHING TO THE STACK!!!!!!!!!!!!!");
+		stack.push(board);
+		colStack.push(lastColour);
+
+	}
+	public void saveGame(Board board){
+		saves.push(board);
+	}
+
+	public Board undo() {
+		return stack.pop();
+
+	}
 	
-}
+	public Board peek(){
+		return stack.peek();
+	}
+	public Colour undoColour(){
+		return colStack.pop();
+	}
 
-public void restore(){
+	public void save(Colour previousColour, int turncount) throws FileNotFoundException {
+
+		PrintWriter pw = new PrintWriter(out);
+
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				Piece p = saves.peek().getPieceCell(row, col); // Contents of //
+																// one square of
+																// board.
+				if (p.getTeam() == Colour.WHITE) {
+					pw.print("" + p.getTeam() + " " + p.getPieceColour() + " " + row + " " + col + "\n");
+				} else if (p.getTeam() == Colour.BLACK) {
+					pw.print("" + p.getTeam() + " " + p.getPieceColour() + " " + row + " " + col + "\n");
+				}
+			}
+
+		}
+		System.out.println("PREVIOUS COLOUR TURNCOUTN TEST: " + previousColour + " " +turncount);
+		pw.print(previousColour + " " + turncount);
+
+		pw.flush();
+		pw.close();
+
+	}
+
+	public Board load() throws IOException {
+		FileReader fr = new FileReader(out);
+		BufferedReader br = new BufferedReader(fr);
+		String s;
+		String team;
+		Colour t = Colour.BLANK;
+		Colour c = Colour.BLANK;
+		String colour;
+		int x;
+		int y;
+		
+		Board newBoard = new Board();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j <8; j++) {
+				newBoard.setPieceCell(i, j, newBoard.getBlankPiece());
+				
+			}
+			
+		}
+
+for (int i = 0; i < 16; i++) {
 	
+
+				s = br.readLine();
+				System.out.println(s);
+				Scanner tokeniser = new Scanner(s);
+				team = tokeniser.next();
+				colour = tokeniser.next();
+
+				x = tokeniser.nextInt();
+				y = tokeniser.nextInt();
+			
+				if (team.equals("WHITE")) {
+					t = Colour.WHITE;
+				}
+				else {
+					t = Colour.BLACK;
+				}
+				
+				if (colour.equals("ORANGE")) {
+					c = Colour.ORANGE;
+				}
+				else if (colour.equals("DBLUE")) {
+					c = Colour.DBLUE;
+				}
+				else if (colour.equals("LBLUE")) {
+					c = Colour.LBLUE;
+				}
+				else if (colour.equals("PINK")) {
+					c = Colour.PINK;
+				}
+				else if (colour.equals("YELLOW")) {
+					c = Colour.YELLOW;
+				}
+				else if (colour.equals("RED")) {
+					c = Colour.RED;
+				}
+				else if (colour.equals("GREEN")) {
+					c = Colour.GREEN;
+				}
+				else if (colour.equals("BROWN")) {
+					c = Colour.BROWN;
+				}
+				
+				Piece p = new Piece(c,t);
+				newBoard.setPieceCell(x, y, p);
+			
+			}
+
+
+s = br.readLine();
+System.out.println(s);
+Scanner tokeniser = new Scanner(s);
+String loadedcolour = tokeniser.next();
+int loadedturncount = tokeniser.nextInt();
+
+
+
+if (loadedcolour.equals("ORANGE")) {
+	this.colour = Colour.ORANGE;
+}
+else if (loadedcolour.equals("DBLUE")) {
+	this.colour = Colour.DBLUE;
+}
+else if (loadedcolour.equals("LBLUE")) {
+	this.colour = Colour.LBLUE;
+}
+else if (loadedcolour.equals("PINK")) {
+	this.colour = Colour.PINK;
+}
+else if (loadedcolour.equals("YELLOW")) {
+	this.colour = Colour.YELLOW;
+}
+else if (loadedcolour.equals("RED")) {
+	this.colour = Colour.RED;
+}
+else if (loadedcolour.equals("GREEN")) {
+	this.colour = Colour.GREEN;
+}
+else if (loadedcolour.equals("BROWN")) {
+	this.colour = Colour.BROWN;
 }
 
+turncount = loadedturncount;
+System.out.println(this.colour);
+
+
+		
+		return newBoard;
+	}
+
+	public Colour getColour() {
+		return colour;
+	}
+
+	public void setColour(Colour colour) {
+		this.colour = colour;
+	}
+
+	public int getTurncount() {
+		return turncount;
+	}
+
+	public void setTurncount(int turncount) {
+		this.turncount = turncount;
+	}
+	
+	
+	
 }

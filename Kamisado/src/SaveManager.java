@@ -11,7 +11,8 @@ import java.io.PrintWriter;
 public class SaveManager {
 	Stack<Board> stack;
 	Stack<Board> saves;
-	Stack<Colour>  colStack;
+	Stack<Colour> colStack;
+	Stack<Colour> boardStack;
 	File out;
 	Colour colour;
 	int turncount;
@@ -19,20 +20,23 @@ public class SaveManager {
 	public SaveManager() {
 		stack = new Stack<Board>();
 		colStack = new Stack<Colour>();
+
 		saves = new Stack<Board>();
+		boardStack = new Stack<Colour>();
 		out = new File("src/out");
 		colour = Colour.BLANK;
 		turncount = 0;
-		
+
 	}
 
-	public void saveBoard(Board board,Colour lastColour) {
+	public void saveBoard(Board board, Colour lastColour) {
 		System.out.println("!!!!!!!!!!!YOU HAVE SAVED SOMETHING TO THE STACK!!!!!!!!!!!!!");
 		stack.push(board);
 		colStack.push(lastColour);
 
 	}
-	public void saveGame(Board board){
+
+	public void saveGame(Board board) {
 		saves.push(board);
 	}
 
@@ -40,11 +44,12 @@ public class SaveManager {
 		return stack.pop();
 
 	}
-	
-	public Board peek(){
+
+	public Board peek() {
 		return stack.peek();
 	}
-	public Colour undoColour(){
+
+	public Colour undoColour() {
 		return colStack.pop();
 	}
 
@@ -65,8 +70,19 @@ public class SaveManager {
 			}
 
 		}
-		System.out.println("PREVIOUS COLOUR TURNCOUTN TEST: " + previousColour + " " +turncount);
-		pw.print(previousColour + " " + turncount);
+
+		System.out.println("PREVIOUS COLOUR TURNCOUTN TEST: " + previousColour + " " + turncount);
+		pw.print(previousColour + " " + turncount + "\n");
+		System.out.println();
+
+		// board loop
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				Colour c = saves.peek().getColour(row, col);
+				System.out.println("SAVE TEST:" + c);
+				pw.println(c);
+			}
+		}
 
 		pw.flush();
 		pw.close();
@@ -83,104 +99,108 @@ public class SaveManager {
 		String colour;
 		int x;
 		int y;
-		
+
 		Board newBoard = new Board();
 		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j <8; j++) {
+			for (int j = 0; j < 8; j++) {
 				newBoard.setPieceCell(i, j, newBoard.getBlankPiece());
-				
+
 			}
-			
+
 		}
 
-for (int i = 0; i < 16; i++) {
-	
+		for (int i = 0; i < 16; i++) {
 
-				s = br.readLine();
-				System.out.println(s);
-				Scanner tokeniser = new Scanner(s);
-				team = tokeniser.next();
-				colour = tokeniser.next();
+			s = br.readLine();
+			System.out.println(s);
+			Scanner tokeniser = new Scanner(s);
+			team = tokeniser.next();
+			colour = tokeniser.next();
 
-				x = tokeniser.nextInt();
-				y = tokeniser.nextInt();
-			
-				if (team.equals("WHITE")) {
-					t = Colour.WHITE;
-				}
-				else {
-					t = Colour.BLACK;
-				}
-				
-				if (colour.equals("ORANGE")) {
-					c = Colour.ORANGE;
-				}
-				else if (colour.equals("DBLUE")) {
-					c = Colour.DBLUE;
-				}
-				else if (colour.equals("LBLUE")) {
-					c = Colour.LBLUE;
-				}
-				else if (colour.equals("PINK")) {
-					c = Colour.PINK;
-				}
-				else if (colour.equals("YELLOW")) {
-					c = Colour.YELLOW;
-				}
-				else if (colour.equals("RED")) {
-					c = Colour.RED;
-				}
-				else if (colour.equals("GREEN")) {
-					c = Colour.GREEN;
-				}
-				else if (colour.equals("BROWN")) {
-					c = Colour.BROWN;
-				}
-				
-				Piece p = new Piece(c,t);
-				newBoard.setPieceCell(x, y, p);
-			
+			x = tokeniser.nextInt();
+			y = tokeniser.nextInt();
+
+			if (team.equals("WHITE")) {
+				t = Colour.WHITE;
+			} else {
+				t = Colour.BLACK;
 			}
 
+			if (colour.equals("ORANGE")) {
+				c = Colour.ORANGE;
+			} else if (colour.equals("DBLUE")) {
+				c = Colour.DBLUE;
+			} else if (colour.equals("LBLUE")) {
+				c = Colour.LBLUE;
+			} else if (colour.equals("PINK")) {
+				c = Colour.PINK;
+			} else if (colour.equals("YELLOW")) {
+				c = Colour.YELLOW;
+			} else if (colour.equals("RED")) {
+				c = Colour.RED;
+			} else if (colour.equals("GREEN")) {
+				c = Colour.GREEN;
+			} else if (colour.equals("BROWN")) {
+				c = Colour.BROWN;
+			}
 
-s = br.readLine();
-System.out.println(s);
-Scanner tokeniser = new Scanner(s);
-String loadedcolour = tokeniser.next();
-int loadedturncount = tokeniser.nextInt();
+			Piece p = new Piece(c, t);
+			newBoard.setPieceCell(x, y, p);
 
+		}
 
+		s = br.readLine();
+		System.out.println(s);
+		Scanner tokeniser = new Scanner(s);
+		String loadedcolour = tokeniser.next();
+		int loadedturncount = tokeniser.nextInt();
 
-if (loadedcolour.equals("ORANGE")) {
-	this.colour = Colour.ORANGE;
-}
-else if (loadedcolour.equals("DBLUE")) {
-	this.colour = Colour.DBLUE;
-}
-else if (loadedcolour.equals("LBLUE")) {
-	this.colour = Colour.LBLUE;
-}
-else if (loadedcolour.equals("PINK")) {
-	this.colour = Colour.PINK;
-}
-else if (loadedcolour.equals("YELLOW")) {
-	this.colour = Colour.YELLOW;
-}
-else if (loadedcolour.equals("RED")) {
-	this.colour = Colour.RED;
-}
-else if (loadedcolour.equals("GREEN")) {
-	this.colour = Colour.GREEN;
-}
-else if (loadedcolour.equals("BROWN")) {
-	this.colour = Colour.BROWN;
-}
+		if (loadedcolour.equals("ORANGE")) {
+			this.colour = Colour.ORANGE;
+		} else if (loadedcolour.equals("DBLUE")) {
+			this.colour = Colour.DBLUE;
+		} else if (loadedcolour.equals("LBLUE")) {
+			this.colour = Colour.LBLUE;
+		} else if (loadedcolour.equals("PINK")) {
+			this.colour = Colour.PINK;
+		} else if (loadedcolour.equals("YELLOW")) {
+			this.colour = Colour.YELLOW;
+		} else if (loadedcolour.equals("RED")) {
+			this.colour = Colour.RED;
+		} else if (loadedcolour.equals("GREEN")) {
+			this.colour = Colour.GREEN;
+		} else if (loadedcolour.equals("BROWN")) {
+			this.colour = Colour.BROWN;
+		}
 
-turncount = loadedturncount;
-System.out.println(this.colour);
+		turncount = loadedturncount;
+		System.out.println(this.colour);
 
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				s = br.readLine();
+				tokeniser = new Scanner(s);
+				String boardcol = tokeniser.next();
+				if (boardcol.equals("ORANGE")) {
+					newBoard.setColour(row, col, Colour.ORANGE);
+				} else if (boardcol.equals("DBLUE")) {
+					newBoard.setColour(row, col, Colour.DBLUE);
+				} else if (boardcol.equals("LBLUE")) {
+					newBoard.setColour(row, col, Colour.LBLUE);
+				} else if (boardcol.equals("PINK")) {
+					newBoard.setColour(row, col, Colour.PINK);
+				} else if (boardcol.equals("YELLOW")) {
+					newBoard.setColour(row, col, Colour.YELLOW);
+				} else if (boardcol.equals("RED")) {
+					newBoard.setColour(row, col, Colour.RED);
+				} else if (boardcol.equals("GREEN")) {
+					newBoard.setColour(row, col, Colour.GREEN);
+				} else if (boardcol.equals("BROWN")) {
+					newBoard.setColour(row, col, Colour.BROWN);
+				}
+			}
+		}
 
-		
 		return newBoard;
 	}
 
@@ -199,7 +219,5 @@ System.out.println(this.colour);
 	public void setTurncount(int turncount) {
 		this.turncount = turncount;
 	}
-	
-	
-	
+
 }

@@ -22,4 +22,16 @@ public class Player {
 		this.team = team;
 	}
 
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	public void addPoints(int points){
+		this.points = this.points + points;
+	}
+
 }

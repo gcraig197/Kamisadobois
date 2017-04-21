@@ -69,6 +69,10 @@ public class Board {
 
 	}
 	
+	public void setColour(int x, int y , Colour colour){
+		boardGrid[x][y] = colour;
+	}
+	
 	public char getCharofColour(Colour colour){
 		char c = ' ';
 		

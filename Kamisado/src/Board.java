@@ -57,7 +57,7 @@ public class Board {
 	}
 
 	public Piece getBlankPiece(){
-		Piece p = new Piece(Colour.BLANK,Colour.BLANK);
+		Piece p = new Piece(Colour.BLANK,Colour.BLANK,0);
 		return p;
 	}
 	/*
@@ -118,30 +118,53 @@ public class Board {
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				pieceGrid[i][j] = new Piece(Colour.BLANK,Colour.BLANK);
+				pieceGrid[i][j] = new Piece(Colour.BLANK,Colour.BLANK,0);
 
 			}
 		}
-		pieceGrid[0][0] = new Piece(boardGrid[0][0], Colour.WHITE);
-		pieceGrid[0][1] = new Piece(boardGrid[0][1], Colour.WHITE);
-		pieceGrid[0][2] = new Piece(boardGrid[0][2], Colour.WHITE);
-		pieceGrid[0][3] = new Piece(boardGrid[0][3], Colour.WHITE);
-		pieceGrid[0][4] = new Piece(boardGrid[0][4], Colour.WHITE);
-		pieceGrid[0][5] = new Piece(boardGrid[0][5], Colour.WHITE);
-		pieceGrid[0][6] = new Piece(boardGrid[0][6], Colour.WHITE);
-		pieceGrid[0][7] = new Piece(boardGrid[0][7], Colour.WHITE);
+		pieceGrid[0][0] = new Piece(boardGrid[0][0], Colour.WHITE,0);
+		pieceGrid[0][1] = new Piece(boardGrid[0][1], Colour.WHITE,0);
+		pieceGrid[0][2] = new Piece(boardGrid[0][2], Colour.WHITE,0);
+		pieceGrid[0][3] = new Piece(boardGrid[0][3], Colour.WHITE,0);
+		pieceGrid[0][4] = new Piece(boardGrid[0][4], Colour.WHITE,0);
+		pieceGrid[0][5] = new Piece(boardGrid[0][5], Colour.WHITE,0);
+		pieceGrid[0][6] = new Piece(boardGrid[0][6], Colour.WHITE,0);
+		pieceGrid[0][7] = new Piece(boardGrid[0][7], Colour.WHITE,0);
 
-		pieceGrid[7][0] = new Piece(boardGrid[7][0], Colour.BLACK);
-		pieceGrid[7][1] = new Piece(boardGrid[7][1], Colour.BLACK);
-		pieceGrid[7][2] = new Piece(boardGrid[7][2], Colour.BLACK);
-		pieceGrid[7][3] = new Piece(boardGrid[7][3], Colour.BLACK);
-		pieceGrid[7][4] = new Piece(boardGrid[7][4], Colour.BLACK);
-		pieceGrid[7][5] = new Piece(boardGrid[7][5], Colour.BLACK);
-		pieceGrid[7][6] = new Piece(boardGrid[7][6], Colour.BLACK);
-		pieceGrid[7][7] = new Piece(boardGrid[7][7], Colour.BLACK);
+		pieceGrid[7][0] = new Piece(boardGrid[7][0], Colour.BLACK,0);
+		pieceGrid[7][1] = new Piece(boardGrid[7][1], Colour.BLACK,0);
+		pieceGrid[7][2] = new Piece(boardGrid[7][2], Colour.BLACK,0);
+		pieceGrid[7][3] = new Piece(boardGrid[7][3], Colour.BLACK,0);
+		pieceGrid[7][4] = new Piece(boardGrid[7][4], Colour.BLACK,0);
+		pieceGrid[7][5] = new Piece(boardGrid[7][5], Colour.BLACK,0);
+		pieceGrid[7][6] = new Piece(boardGrid[7][6], Colour.BLACK,0);
+		pieceGrid[7][7] = new Piece(boardGrid[7][7], Colour.BLACK,0);
 
 	}
 	
+	public void setSumoPieces(ArrayList<Piece> sumoPieces){
+		for(int i=0;i<sumoPieces.size();i++){
+			if(sumoPieces.get(i).getTeam() == Colour.WHITE){
+				for (int j = 0; j < 8; j++) {
+					if (sumoPieces.get(i).getPieceColour() == pieceGrid[0][i].getPieceColour()) {
+						pieceGrid[0][i] = sumoPieces.get(i);
+						
+					}
+					
+				}
+			}
+			
+			if (sumoPieces.get(i).getTeam() == Colour.BLACK) {
+				for (int j = 0; j < 8; j++) {
+					if (sumoPieces.get(i).getPieceColour() == pieceGrid[7][j].getPieceColour()) {
+						pieceGrid[7][j] = sumoPieces.get(i);
+					}
+					
+				}
+				
+			}
+		}
+	}
 	
 	public void randomize() {
 		
@@ -171,19 +194,19 @@ public class Board {
 	public void setUpDeadlock(){
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 8; j++) {
-				pieceGrid[i][j] = new Piece(Colour.LBLUE,Colour.WHITE);
+				pieceGrid[i][j] = new Piece(Colour.LBLUE,Colour.WHITE,0);
 
 			}
 		}
 		
 		for (int i = 4; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				pieceGrid[i][j] = new Piece(Colour.LBLUE,Colour.BLACK);
+				pieceGrid[i][j] = new Piece(Colour.LBLUE,Colour.BLACK,0);
 
 			}
 		}
 		
-		pieceGrid[4][6] =  new Piece(Colour.BLANK,Colour.BLANK);
+		pieceGrid[4][6] =  new Piece(Colour.BLANK,Colour.BLANK,0);
 	}
 
 	/*

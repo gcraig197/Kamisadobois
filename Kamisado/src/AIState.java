@@ -14,12 +14,15 @@ public class AIState {
 	private SaveManager save;
 	private Colour lastColour;
 	private Boolean randomboard;
+	private Piece winningPiece;
 
 	public AIState(boolean speedgame, boolean randomboard) {
 		finished = false;
 		this.randomboard = randomboard;
 		 board = new Board();
-		 resetBoard();
+		 if(randomboard)
+				board.randomize();
+			board.Setup();
 		sc = new Scanner(System.in);
 		deadlockFlag = false;
 		gui = new BoardGUI(board);
@@ -219,18 +222,32 @@ public class AIState {
 	public boolean isFinished() {
 		for (int i = 0; i < 8; i++) {
 			if (board.getPieceCell(0, i).getTeam() == Colour.BLACK) {
+				board.getPieceCell(0, i).setDragonTeeth(board.getPieceCell(0, i).getTeeth() + 1);
+				setWinningPiece(board.getPieceCell(0, i));
 				return true;
 			}
 		}
 		for (int j = 0; j < 8; j++) {
 			if (board.getPieceCell(7, j).getTeam() == Colour.WHITE) {
+				board.getPieceCell(7, j).setDragonTeeth(board.getPieceCell(7, j).getTeeth() + 1);
+				setWinningPiece(board.getPieceCell(7, j));
 				return true;
 			}
 			if (finished == true) {
+				
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	private void setWinningPiece(Piece winningPiece) {
+		this.winningPiece = winningPiece;
+		
+	}
+	
+	public Piece getWinningPiece(){
+		return winningPiece;
 	}
 
 	public void setFinished(boolean finished) {
@@ -450,6 +467,8 @@ public class AIState {
 		return true;
 
 	}
+	
+	
 
 	public Piece nextPieceMove(Colour prev, Player player) {
 		if (player.getTeam() == Colour.WHITE) {
@@ -643,8 +662,11 @@ public class AIState {
 	public void resetBoard(){
 		if(randomboard)
 			board.randomize();
-		
 		board.Setup();
+		gui.refresh(board);
+	}
+	public void setSumoPieces(ArrayList<Piece> sumoPieces){
+		board.setSumoPieces(sumoPieces);
 	}
 
 }

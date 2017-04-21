@@ -7,6 +7,7 @@ public class Player {
 	public Player() {
 		this.name = "default";
 		sc = new Scanner(System.in);
+		points = 0;
 	}
 
 	public void setName(String name){

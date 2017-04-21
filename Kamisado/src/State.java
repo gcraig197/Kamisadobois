@@ -11,6 +11,7 @@ public class State {
 	private Boolean deadlockFlag;
 	private Scanner sc;
 	private BoardGUI gui;
+	private Piece winningPiece;
 
 	private Colour lastColour;
 
@@ -59,7 +60,7 @@ public class State {
 			int currposa = gui.getX();
 			int currposb = gui.getY();
 			gui.setCanMove(false);
-			gui.availableMoves(currposa, currposb, player);
+			availableMoves(currposa, currposb, player, previousColour);
 
 			// wait for click
 
@@ -94,7 +95,7 @@ public class State {
 			int currposb = board.getLastPieceY(player, previousColour);
 			System.out.println("(" + currposa + "," + currposb + ")");
 			gui.setCanMove(false);
-			gui.availableMoves(currposa, currposb, player);
+			availableMoves(currposa, currposb, player, previousColour);
 			while (gui.canMove() == false) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
@@ -128,18 +129,32 @@ public class State {
 	public boolean isFinished() {
 		for (int i = 0; i < 8; i++) {
 			if (board.getPieceCell(0, i).getTeam() == Colour.BLACK) {
+				board.getPieceCell(0, i).setDragonTeeth(board.getPieceCell(0, i).getTeeth() + 1);
+				setWinningPiece(board.getPieceCell(0, i));
 				return true;
 			}
 		}
 		for (int j = 0; j < 8; j++) {
 			if (board.getPieceCell(7, j).getTeam() == Colour.WHITE) {
+				board.getPieceCell(7, j).setDragonTeeth(board.getPieceCell(7, j).getTeeth() + 1);
+				setWinningPiece(board.getPieceCell(7, j));
 				return true;
 			}
 			if (finished == true) {
+				
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private void setWinningPiece(Piece winningPiece) {
+		this.winningPiece = winningPiece;
+		
+	}
+	
+	public Piece getWinningPiece(){
+		return winningPiece;
 	}
 
 	public void setFinished(boolean finished) {
@@ -276,6 +291,10 @@ public class State {
 			if (currposb == newposb) {
 				// for loop beginning at currposa + 1 ending at newposa
 				for (int i = currposa + 1; i <= newposa; i++) {
+					
+					if (newposa - currposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
 					if (board.getPieceCell(i, currposb).getPieceColour() != Colour.BLANK) {
 						System.out.println("Path is Blocked by tower");
 						return false;
@@ -286,6 +305,11 @@ public class State {
 			// Occupied for diag movement left
 			if (currposb > newposb) { // diag left
 				for (int i = 1; i <= newposa - currposa; i++) {
+					
+					if (newposa - currposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() != Colour.BLANK) {
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -297,6 +321,11 @@ public class State {
 			// Occupied for diag movement right
 			if (currposb < newposb) { // diag right
 				for (int i = 1; i <= newposa - currposa; i++) {
+					
+					if (newposa - currposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() != Colour.BLANK) { // white
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -324,6 +353,11 @@ public class State {
 			if (currposb == newposb) {
 				// for loop beginning at currposa + 1 ending at newposa
 				for (int i = currposa - 1; i >= newposa; i--) {
+					
+					if (currposa - newposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(i, currposb).getPieceColour() != Colour.BLANK) {
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -335,6 +369,11 @@ public class State {
 			// Occupied for diag movement left
 			if (currposb > newposb) { // diag left
 				for (int i = 1; i <= currposa - newposa; i++) {
+					
+					if (currposa - newposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() != Colour.BLANK) {
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -346,6 +385,11 @@ public class State {
 			// Occupied for diag movement right
 			if (currposb < newposb) { // diag right
 				for (int i = 1; i <= currposa - newposa; i++) {
+					
+					if (currposa - newposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() != Colour.BLANK) { // black
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -357,8 +401,19 @@ public class State {
 		}
 
 		return true;
-
 	}
+	
+	private void availableMoves(int currposa, int currposb, Player player, Colour previousColour){
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				if (movelegality(player, currposa, currposb, row, col, previousColour))
+					gui.darkenCell(row, col);
+	}
+		}
+	}
+	
+	
+	
 
 	public Piece nextPieceMove(Colour prev, Player player) {
 		if (player.getTeam() == Colour.WHITE) {

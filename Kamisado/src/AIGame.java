@@ -7,6 +7,7 @@
  *
  */
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +25,8 @@ public class AIGame {
 	private AIGameMenuGUI gm;
 	private GameOverGUI gameover;
 	private Boolean randomboard;
-	private int round;
+	private ArrayList<Piece> sumoPieces;
+	private int rounds;
 
 	public AIGame() {
 		this.player1 = new Player();
@@ -35,6 +37,7 @@ public class AIGame {
 		previousColour = Colour.BLANK;
 		speedgame = false;
 		randomboard = true;
+		sumoPieces = new ArrayList<Piece>();
 	}
 
 	public void setup() {
@@ -62,12 +65,9 @@ public class AIGame {
 		player2.setTeam(Colour.BLACK);
 
 		speedgame = gm.isSpeedGame();
-		if (speedgame == true) {
-			this.state = new AIState(speedgame, randomboard);
-		} else {
-			this.state = new AIState(speedgame, randomboard);
-		}
-
+		randomboard = gm.isRandomBoard();
+		rounds = gm.getRounds();
+		this.state = new AIState(speedgame, randomboard);
 	}
 
 	public Player getPlayerTurn() {
@@ -91,9 +91,10 @@ public class AIGame {
 
 	public void play() throws FileNotFoundException {
 
+		int counter = 0;
 		currPlayer = new Player();
 		state.printGame();
-		while (round < 3) {
+		while (counter < rounds) {
 			while (state.isFinished() == false) {
 
 				currPlayer = getPlayerTurn();
@@ -121,8 +122,21 @@ public class AIGame {
 				turncount++;
 
 			}
+			RoundOverGUI roundover = new RoundOverGUI(currPlayer);
+			while(roundover.isFinished() == false){
+				try {
+					TimeUnit.MILLISECONDS.sleep(20);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			turncount = 0;  
+			previousColour = Colour.BLANK;
+			sumoPieces.add(state.getWinningPiece());
 			state.resetBoard();
-			round++;
+			state.setSumoPieces(sumoPieces);
+			counter++;
 		}
 		gameover = new GameOverGUI(currPlayer);
 	}

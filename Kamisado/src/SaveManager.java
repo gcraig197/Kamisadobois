@@ -63,9 +63,9 @@ public class SaveManager {
 																// one square of
 																// board.
 				if (p.getTeam() == Colour.WHITE) {
-					pw.print("" + p.getTeam() + " " + p.getPieceColour() + " " + row + " " + col + "\n");
+					pw.print("" + p.getTeam() + " " + p.getPieceColour() + " " + row + " " + col + " " + p.getTeeth() +  "\n");
 				} else if (p.getTeam() == Colour.BLACK) {
-					pw.print("" + p.getTeam() + " " + p.getPieceColour() + " " + row + " " + col + "\n");
+					pw.print("" + p.getTeam() + " " + p.getPieceColour() + " " + row + " " + col + " " + p.getTeeth() + "\n");
 				}
 			}
 
@@ -99,6 +99,7 @@ public class SaveManager {
 		String colour;
 		int x;
 		int y;
+		int teeth;
 
 		Board newBoard = new Board();
 		for (int i = 0; i < 8; i++) {
@@ -119,6 +120,7 @@ public class SaveManager {
 
 			x = tokeniser.nextInt();
 			y = tokeniser.nextInt();
+			teeth = tokeniser.nextInt();
 
 			if (team.equals("WHITE")) {
 				t = Colour.WHITE;
@@ -144,7 +146,7 @@ public class SaveManager {
 				c = Colour.BROWN;
 			}
 
-			Piece p = new Piece(c, t);
+			Piece p = new Piece(c, t,teeth);
 			newBoard.setPieceCell(x, y, p);
 
 		}

@@ -689,7 +689,8 @@ public class BoardGUI extends JFrame {
 					if ((currposb + i) <= 7 && (currposa - i) >= 0
 							&& board.getColour(currposa - i, currposb + i) == Colour.BROWN) {
 						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
-							buttons[currposa - i][currposb + i].setBackground(Color.black.darker().darker().darker());
+							//buttons[currposa - i][currposb + i].setBackground(Color.black.darker().darker().darker());
+							buttons[currposa - i][currposb + i].getBackground().darker();
 						} else {
 							break;
 						}
@@ -721,6 +722,10 @@ public class BoardGUI extends JFrame {
 			}
 		}
 
+	}
+
+	public void darkenCell(int x, int y) {
+		buttons[x][y].getBackground().darker().darker().darker();
 	}
 
 }

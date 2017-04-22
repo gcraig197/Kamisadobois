@@ -45,7 +45,7 @@ public class BoardGUI extends JFrame {
 		l = false;
 		u = false;
 		m = false;
-		
+
 		contents = getContentPane();
 		contents.setLayout(new GridLayout(8, 8));
 		bh = new ButtonHandler();
@@ -57,7 +57,7 @@ public class BoardGUI extends JFrame {
 		load = new JMenuItem("Load");
 		undo = new JMenuItem("Undo");
 		moves = new JMenuItem("Type manual move");
-		
+
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				buttons[i][j] = new JButton();
@@ -116,29 +116,154 @@ public class BoardGUI extends JFrame {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_Orange.png"));
+				}
+				if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_Orange_1.png"));
+				}
+				if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_Orange_2.png"));
+				}
+				if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_Orange_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_LBLUE_1.png"));
+
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_LBLUE_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_LBLUE_3.png"));
+				}
+
+				else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_LBLUE.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_DBLUE.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_DBLUE_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_DBLUE_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_DBLUE_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_Pink.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_Pink_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_Pink_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_Pink_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_Yellow.png"));
-				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_Yellow_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_Yellow_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_Yellow_3.png"));
+				}
+
+				else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_Red.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_Red_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_Red_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
+
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_Red_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_Green.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
+
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_Green_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_Green_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
+
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_Green_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
-						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("W_Brown.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("W_Brown_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("W_Brown_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
+						&& board.getPieceCell(i, j).getTeam() == Colour.WHITE
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("W_Brown_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BLANK) {
 					buttons[i][j].setIcon(null);
 				}
@@ -146,29 +271,157 @@ public class BoardGUI extends JFrame {
 				// Black team
 
 				else if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("Orange.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("Orange_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("Orange_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.ORANGE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("Orange_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("LBlue.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("LBlue_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
+
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("LBlue_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.LBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("LBlue_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("DBLue.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("DBlue_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("DBlue_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.DBLUE
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("DBlue_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("Pink.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("Pink_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("Pink_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.PINK
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("Pink_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("Yellow.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("Yellow_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("Yellow_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.YELLOW
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("Yellow_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("Red.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("Red_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("Red_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.RED
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("Red_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("Green.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("Green_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("Green_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.GREEN
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("Green_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
-						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK) {
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+						&& board.getPieceCell(i, j).getTeeth() == 0) {
 					buttons[i][j].setIcon(new ImageIcon("Brown.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 1) {
+					buttons[i][j].setIcon(new ImageIcon("Brown_1.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 2) {
+					buttons[i][j].setIcon(new ImageIcon("Brown_2.png"));
+				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BROWN
+						&& board.getPieceCell(i, j).getTeam() == Colour.BLACK
+
+						&& board.getPieceCell(i, j).getTeeth() == 3) {
+					buttons[i][j].setIcon(new ImageIcon("Brown_3.png"));
 				} else if (board.getPieceCell(i, j).getPieceColour() == Colour.BLANK) {
 					buttons[i][j].setIcon(null);
 				}
@@ -179,44 +432,40 @@ public class BoardGUI extends JFrame {
 		setSize(1000, 1000);
 		setResizable(false);
 		setVisible(true);
-		
-		moves.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e){
-				 m = true;
-				 makePopUpFrame();
+
+		moves.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				m = true;
+				makePopUpFrame();
 			}
 		});
-		
-		save.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e){
-						s = true;
-					}
-				});
+
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				s = true;
+			}
+		});
 		menu.add(save);
-		load.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				l = true;
 			}
 		});
 		menu.add(load);
-		undo.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		undo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				u = true;
 			}
 		});
 		menu2.add(undo);
-		quit.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e){
-						System.exit(0);
-					}
+		quit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
 
-					
-				});
+		});
 		menu.add(quit);
-		//menu2.add(moves);
+		// menu2.add(moves);
 		menubar.add(menu);
 		menubar.add(menu2);
 		setJMenuBar(menubar);
@@ -247,32 +496,40 @@ public class BoardGUI extends JFrame {
 	public boolean canMove() {
 		return canMove;
 	}
-	
-	public boolean canSave(){
+
+	public boolean canSave() {
 		return s;
 	}
-	public void setCanSave(boolean s){
+
+	public void setCanSave(boolean s) {
 		this.s = s;
 	}
-	public boolean canUndo(){
+
+	public boolean canUndo() {
 		return u;
 	}
-	public void setCanUndo(boolean u){
+
+	public void setCanUndo(boolean u) {
 		this.u = u;
 	}
-	public boolean canLoad(){
+
+	public boolean canLoad() {
 		return l;
 	}
-	public void setCanLoad(boolean l){
+
+	public void setCanLoad(boolean l) {
 		this.l = l;
 	}
-	public boolean canMakeMove(){
+
+	public boolean canMakeMove() {
 		return m;
 	}
-	public void setMakeMove(boolean m){
+
+	public void setMakeMove(boolean m) {
 		this.m = m;
 	}
-	public void makePopUpFrame(){
+
+	public void makePopUpFrame() {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel("Enter the coordinaes ");
@@ -286,6 +543,7 @@ public class BoardGUI extends JFrame {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 	}
+
 	public void availableMoves(int currposa, int currposb, Player player) {
 		if (board.getPieceCell(currposa, currposb).getPieceColour() != Colour.BLANK) {
 
@@ -549,7 +807,7 @@ public class BoardGUI extends JFrame {
 					}
 					if (board.getColour(i, currposb) == Colour.BROWN) {
 						if (board.getPieceCell(i, currposb).getPieceColour() == Colour.BLANK) {
-							buttons[i][currposb].setBackground(Color.BLACK.darker().darker().darker());
+							buttons[i][currposb].setBackground(Color.black.darker().darker().darker());
 						} else {
 							break;
 						}
@@ -689,7 +947,7 @@ public class BoardGUI extends JFrame {
 					if ((currposb + i) <= 7 && (currposa - i) >= 0
 							&& board.getColour(currposa - i, currposb + i) == Colour.BROWN) {
 						if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() == Colour.BLANK) {
-							//buttons[currposa - i][currposb + i].setBackground(Color.black.darker().darker().darker());
+							 buttons[currposa - i][currposb + i].setBackground(Color.black.darker().darker().darker());
 							buttons[currposa - i][currposb + i].getBackground().darker();
 						} else {
 							break;

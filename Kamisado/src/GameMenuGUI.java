@@ -21,8 +21,11 @@ private JTextField choice;
 private JLabel l;
 private JLabel l2;
 private JCheckBox checkbox;
+private JCheckBox box;
 private boolean finished;
-
+private JLabel randomboard;
+private JComboBox round;
+private JLabel numrounds;
 
 public static void main(String[] args) {
 	GameMenuGUI g = new GameMenuGUI();
@@ -36,22 +39,29 @@ public static void main(String[] args) {
 		b = new JButton("Submit");
 		l = new JLabel("Player 1 Name:");
 		l2 = new JLabel("Player 2 Name:");
+		randomboard = new JLabel("Random Board?");
+		box = new JCheckBox();
+		String[] rounds = {"1","3","5"};
+		round = new JComboBox<>(rounds);
+		numrounds = new JLabel("No.Rounds");
 		
 		JLabel label = new JLabel("White player name:");
-		JLabel label2 = new JLabel("Speedgame?");
+		JLabel label2 = new JLabel("Speed game?");
 		choice = new JTextField();
 		checkbox = new JCheckBox();
 
-		
-		
+		numrounds.setBounds(170, 130, 100, 25);
+		round.setBounds(250, 130, 50, 25);
 		
 		label.setBounds(250, 40, 250, 25);
 		label2.setBounds(250,70,100,25);
 		
-		checkbox.setBounds(330, 67, 30, 30);
+		checkbox.setBounds(360, 67, 30, 30);
 	
+		randomboard.setBounds(250, 95, 100, 25);
+		box.setBounds(360, 94, 30, 30);
 		
-		b.setBounds(190,150,100,30);
+		b.setBounds(190,190,100,30);
 		b.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e){
@@ -80,6 +90,10 @@ public static void main(String[] args) {
 		jp.add(choice);
 		jp.add(label);
 		jp.add(label2);
+		jp.add(randomboard);
+		jp.add(box);
+		jp.add(numrounds);
+		jp.add(round);
 		
 		add(jp);
 		
@@ -104,5 +118,18 @@ public static void main(String[] args) {
 	public boolean isFinished(){
 		return finished;
 	}
-	
+	public boolean isRandomBoard(){
+		return box.isSelected();
+	}
+	public int getRounds(){
+		if(round.getSelectedItem() == "1"){
+			return 1;
+		}
+		else if(round.getSelectedItem() == "3"){
+			return 3;
+		}
+		else{
+			return 5;
+		}
+	}
 }

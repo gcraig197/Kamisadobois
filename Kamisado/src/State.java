@@ -12,8 +12,8 @@ public class State {
 	private Scanner sc;
 	private BoardGUI gui;
 	private Piece winningPiece;
-
 	private Colour lastColour;
+	private boolean randomboard;
 
 	public State(boolean speedgame, boolean randomBoard) {
 		finished = false;
@@ -39,6 +39,8 @@ public class State {
 
 	public Colour move(Player player, Colour previousColour, int turncount) {
 
+		gui.refresh(board);
+		
 		if (deadLockCheck(player, previousColour) == false) {
 			System.out.println(player.getTeam());
 			return board.getColour(board.getLastPieceX(player, previousColour),
@@ -60,7 +62,7 @@ public class State {
 			int currposa = gui.getX();
 			int currposb = gui.getY();
 			gui.setCanMove(false);
-			availableMoves(currposa, currposb, player, previousColour);
+			gui.availableMoves(currposa, currposb, player);
 
 			// wait for click
 
@@ -95,7 +97,7 @@ public class State {
 			int currposb = board.getLastPieceY(player, previousColour);
 			System.out.println("(" + currposa + "," + currposb + ")");
 			gui.setCanMove(false);
-			availableMoves(currposa, currposb, player, previousColour);
+			gui.availableMoves(currposa, currposb, player);
 			while (gui.canMove() == false) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
@@ -154,7 +156,10 @@ public class State {
 	}
 	
 	public Piece getWinningPiece(){
-		return winningPiece;
+		Piece temp = new Piece(winningPiece.getPieceColour(), winningPiece.getTeam(), winningPiece.getTeeth());
+		System.out.println("\nWinning Piece stats\n");
+		System.out.println("\n" + winningPiece.getPieceColour() + " " + winningPiece.getTeam() + " " + winningPiece.getTeeth() + "\n");
+		return temp;
 	}
 
 	public void setFinished(boolean finished) {
@@ -508,6 +513,16 @@ public class State {
 
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+	
+	public void resetBoard(){
+		if(randomboard)
+			board.randomize();
+		board.Setup();
+		gui.refresh(board);
+	}
+	public void setSumoPieces(ArrayList<Piece> sumoPieces){
+		board.setSumoPieces(sumoPieces);
 	}
 
 }

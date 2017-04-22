@@ -134,6 +134,16 @@ public class LeaderBoard {
 
 		System.out.println("array size : " + leaderboard.size());
 	}
+	
+	public void printLeaderBoard(){
+		
+		System.out.println("\n" + "Leaderboard" + "\n");
+		
+		for (int i = 0; i < leaderboard.size(); i++) {
+			System.out.println(leaderboard.get(i).getName() + "  " + leaderboard.get(i).getPoints());
+			
+		}
+	}
 
 	public void populate() {
 		for (int i = 0; i < 10; i++) {

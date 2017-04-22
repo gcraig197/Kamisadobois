@@ -6,7 +6,10 @@
  * @author Gavin
  *
  */
+import java.awt.Container;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 public class TwoPlayerGame {
@@ -21,6 +24,11 @@ public class TwoPlayerGame {
 	private Scanner sc;
 	private GameMenuGUI gm;
 	private GameOverGUI gameover;
+	private int player1RoundsWon;
+	private int player2RoundsWon;
+	private int rounds;
+	private ArrayList<Piece> sumoPieces;
+	private LeaderBoard leaderBoard;
 	
 	public TwoPlayerGame() {
 		this.player1 = new Player();
@@ -30,6 +38,14 @@ public class TwoPlayerGame {
 		previousColour = Colour.BLANK;
 		speedgame = false;
 		randomboard = true;
+		sumoPieces = new ArrayList<Piece>();
+		leaderBoard = new LeaderBoard();
+		try {
+			leaderBoard.loadLeaderBoard();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -73,12 +89,10 @@ public class TwoPlayerGame {
 		
 		
 		speedgame = gm.isSpeedGame();
-		if(speedgame == true){
-			this.state = new State(speedgame,randomboard);
-		}
-		else{
-			  this.state = new State(speedgame,randomboard);
-		}
+		randomboard = gm.isRandomBoard();
+		rounds = gm.getRounds();
+		state = new State(speedgame,randomboard);
+	
 		
 		
 	}
@@ -109,6 +123,10 @@ public class TwoPlayerGame {
 		
 		currPlayer = new Player();
 		state.printGame();
+		int counter = 0;
+		while(counter < rounds){
+			
+		
 		while (state.isFinished() == false) {
 		
 			currPlayer = getPlayerTurn();
@@ -133,9 +151,67 @@ public class TwoPlayerGame {
 			state.printGame();
 
 			}
+		RoundOverGUI roundover = new RoundOverGUI(currPlayer);
+		while(roundover.isFinished() == false){
+			try {
+				TimeUnit.MILLISECONDS.sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(currPlayer == player1){
+			player1RoundsWon++;
+		}
+		else{
+			player2RoundsWon++;
+		}
+		
+		calcPointsWon(currPlayer);
+		
+		if(earlyWin())
+			break;
+		turncount = 0;  
+		previousColour = Colour.BLANK;
+		sumoPieces.add(state.getWinningPiece());
+		state.resetBoard();
+		state.setSumoPieces(sumoPieces);
+		counter++;
+		}
+		leaderBoard.saveScore(currPlayer, currPlayer.getPoints());
+		leaderBoard.saveLeaderBoard();
 		gameover = new GameOverGUI(currPlayer);
 	}
 	
+	
+	private void calcPointsWon(Player currPlayer) {
+		if(state.getWinningPiece().getTeeth() == 1){
+			currPlayer.addPoints(3);
+		}
+		else if(state.getWinningPiece().getTeeth() == 2){
+			currPlayer.addPoints(7);
+		}
+		else if(state.getWinningPiece().getTeeth() == 3){
+			currPlayer.addPoints(15);
+		}
+		else{
+			currPlayer.addPoints(1);
+		}
+		
+	}
+
+	public boolean earlyWin(){
+		if(player1RoundsWon > rounds/2){
+			return true;
+		}
+		else if(player2RoundsWon > rounds/2){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	
 }
 

@@ -16,6 +16,7 @@ public class SaveManager {
 	File out;
 	Colour colour;
 	int turncount;
+	int rounds;
 
 	public SaveManager() {
 		stack = new Stack<Board>();
@@ -53,7 +54,7 @@ public class SaveManager {
 		return colStack.pop();
 	}
 
-	public void save(Colour previousColour, int turncount) throws FileNotFoundException {
+	public void save(Colour previousColour, int turncount, int rounds) throws FileNotFoundException {
 
 		PrintWriter pw = new PrintWriter(out);
 
@@ -72,7 +73,7 @@ public class SaveManager {
 		}
 
 		System.out.println("PREVIOUS COLOUR TURNCOUTN TEST: " + previousColour + " " + turncount);
-		pw.print(previousColour + " " + turncount + "\n");
+		pw.print(previousColour + " " + turncount + " " + rounds + "\n");
 		System.out.println();
 
 		// board loop
@@ -156,6 +157,7 @@ public class SaveManager {
 		Scanner tokeniser = new Scanner(s);
 		String loadedcolour = tokeniser.next();
 		int loadedturncount = tokeniser.nextInt();
+		int rounds = tokeniser.nextInt();
 
 		if (loadedcolour.equals("ORANGE")) {
 			this.colour = Colour.ORANGE;
@@ -175,6 +177,7 @@ public class SaveManager {
 			this.colour = Colour.BROWN;
 		}
 
+		this.rounds = rounds;
 		turncount = loadedturncount;
 		System.out.println(this.colour);
 

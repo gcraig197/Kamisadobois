@@ -40,9 +40,10 @@ public class AIState {
 		board.printCurrentBoard();
 	}
 
-	public Colour move(Player player, Colour previousColour, int turncount) {
-
+	public Colour move(Player player, Colour previousColour, int turncount, int rounds) {
+		board.printTeeth();
 		save.saveGame(board);
+		gui.refresh(board);
 
 		if (deadLockCheck(player, previousColour) == false) {
 			System.out.println(player.getTeam());
@@ -58,7 +59,7 @@ public class AIState {
 					TimeUnit.MILLISECONDS.sleep(20);
 					if (gui.canSave()) {
 						System.out.println("Turn count test!! " + turncount);
-						save(previousColour, turncount);
+						save(previousColour, turncount, rounds);
 						gui.setCanSave(false);
 					}
 				
@@ -69,7 +70,7 @@ public class AIState {
 							previousColour = getLoadedColour();
 							gui.setCanLoad(false);
 							gui.refresh(board);
-							previousColour = move(player,previousColour, turncount);
+							previousColour = move(player,previousColour, turncount,rounds);
 							return previousColour;
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -97,7 +98,7 @@ public class AIState {
 					TimeUnit.MILLISECONDS.sleep(20);
 					if (gui.canSave()) {
 						System.out.println("Turn count test!! " + turncount);
-						save(previousColour, turncount);
+						save(previousColour, turncount, rounds);
 						gui.setCanSave(false);
 					}
 					if(gui.canLoad()){
@@ -107,7 +108,7 @@ public class AIState {
 							previousColour = getLoadedColour();
 							gui.setCanLoad(false);
 							gui.refresh(board);
-							previousColour = move(player,previousColour, turncount);
+							previousColour = move(player,previousColour, turncount,rounds);
 							return previousColour;
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -143,7 +144,7 @@ public class AIState {
 			else {
 				gui.refresh(board);
 				gui.setCanMove(false);
-				previousColour = move(player, previousColour, turncount);
+				previousColour = move(player, previousColour, turncount,rounds);
 			}
 		} else {
 
@@ -160,7 +161,7 @@ public class AIState {
 					TimeUnit.MILLISECONDS.sleep(20);
 					if (gui.canSave()) {
 						System.out.println("Turn count test!! " + turncount);
-						save(previousColour, turncount);
+						save(previousColour, turncount,rounds);
 						gui.setCanSave(false);
 					}
 					if(gui.canLoad()){
@@ -170,7 +171,7 @@ public class AIState {
 							previousColour = getLoadedColour();
 							gui.setCanLoad(false);
 							gui.refresh(board);
-							previousColour = move(player,previousColour, turncount);
+							previousColour = move(player,previousColour, turncount,rounds);
 							return previousColour;
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -182,7 +183,7 @@ public class AIState {
 						undoColour();
 						gui.setCanUndo(false);
 						gui.refresh(board);
-						previousColour = move(player, lastColour, turncount - 2);
+						previousColour = move(player, lastColour, turncount - 2,rounds);
 						return previousColour;
 
 					}
@@ -212,7 +213,7 @@ public class AIState {
 
 			else {
 				gui.setCanMove(false);
-				previousColour = move(player, previousColour, turncount);
+				previousColour = move(player, previousColour, turncount,rounds);
 			}
 		}
 
@@ -247,7 +248,10 @@ public class AIState {
 	}
 	
 	public Piece getWinningPiece(){
-		return winningPiece;
+		Piece temp = new Piece(winningPiece.getPieceColour(), winningPiece.getTeam(), winningPiece.getTeeth());
+		System.out.println("\nWinning Piece stats\n");
+		System.out.println("\n" + winningPiece.getPieceColour() + " " + winningPiece.getTeam() + " " + winningPiece.getTeeth() + "\n");
+		return temp;
 	}
 
 	public void setFinished(boolean finished) {
@@ -384,6 +388,10 @@ public class AIState {
 			if (currposb == newposb) {
 				// for loop beginning at currposa + 1 ending at newposa
 				for (int i = currposa + 1; i <= newposa; i++) {
+					
+					if (newposa - currposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
 					if (board.getPieceCell(i, currposb).getPieceColour() != Colour.BLANK) {
 						System.out.println("Path is Blocked by tower");
 						return false;
@@ -394,6 +402,11 @@ public class AIState {
 			// Occupied for diag movement left
 			if (currposb > newposb) { // diag left
 				for (int i = 1; i <= newposa - currposa; i++) {
+					
+					if (newposa - currposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa + i, currposb - i).getPieceColour() != Colour.BLANK) {
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -405,6 +418,11 @@ public class AIState {
 			// Occupied for diag movement right
 			if (currposb < newposb) { // diag right
 				for (int i = 1; i <= newposa - currposa; i++) {
+					
+					if (newposa - currposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa + i, currposb + i).getPieceColour() != Colour.BLANK) { // white
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -432,6 +450,11 @@ public class AIState {
 			if (currposb == newposb) {
 				// for loop beginning at currposa + 1 ending at newposa
 				for (int i = currposa - 1; i >= newposa; i--) {
+					
+					if (currposa - newposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(i, currposb).getPieceColour() != Colour.BLANK) {
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -443,6 +466,11 @@ public class AIState {
 			// Occupied for diag movement left
 			if (currposb > newposb) { // diag left
 				for (int i = 1; i <= currposa - newposa; i++) {
+					
+					if (currposa - newposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa - i, currposb - i).getPieceColour() != Colour.BLANK) {
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -454,6 +482,11 @@ public class AIState {
 			// Occupied for diag movement right
 			if (currposb < newposb) { // diag right
 				for (int i = 1; i <= currposa - newposa; i++) {
+					
+					if (currposa - newposa > board.getPieceCell(currposa, currposb).getMoveLimit()) {
+						return false;
+					}
+					
 					if (board.getPieceCell(currposa - i, currposb + i).getPieceColour() != Colour.BLANK) { // black
 						System.out.println(" Path Blocked by tower");
 						return false;
@@ -465,7 +498,6 @@ public class AIState {
 		}
 
 		return true;
-
 	}
 	
 	
@@ -567,7 +599,9 @@ public class AIState {
 
 			}
 		}
-
+		if (array.isEmpty()) {
+			return previousColour;
+		}
 		AImove aimove = array.get(rng.nextInt(array.size()));
 		board.setPieceCell(aimove.getI(), aimove.getJ(), p);
 		board.setPieceCell(currposa, currposb, board.getBlankPiece());
@@ -598,8 +632,8 @@ public class AIState {
 		return false;
 	}
 
-	public void save(Colour previousColour,int turncount) throws FileNotFoundException {
-		save.save(lastColour, turncount);
+	public void save(Colour previousColour,int turncount, int rounds) throws FileNotFoundException {
+		save.save(lastColour, turncount , rounds);
 
 	}
 
@@ -668,5 +702,6 @@ public class AIState {
 	public void setSumoPieces(ArrayList<Piece> sumoPieces){
 		board.setSumoPieces(sumoPieces);
 	}
+
 
 }

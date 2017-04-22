@@ -146,8 +146,8 @@ public class Board {
 		for(int i=0;i<sumoPieces.size();i++){
 			if(sumoPieces.get(i).getTeam() == Colour.WHITE){
 				for (int j = 0; j < 8; j++) {
-					if (sumoPieces.get(i).getPieceColour() == pieceGrid[0][i].getPieceColour()) {
-						pieceGrid[0][i] = sumoPieces.get(i);
+					if (sumoPieces.get(i).getPieceColour() == pieceGrid[0][j].getPieceColour()) {
+						pieceGrid[0][j] = sumoPieces.get(i);
 						
 					}
 					
@@ -222,6 +222,14 @@ public class Board {
 		}
 		System.out.println();
 		System.out.println();
+	}
+	
+	public void printTeeth(){
+		for (int i = 0; i < 8; i++) {
+			for(int j = 0; j< 8; j++){
+				System.out.println(getPieceCell(i, j).getPieceColour() + " " + getPieceCell(i, j).getTeeth());
+			}
+		}
 	}
 	
 	public int getLastPieceX(Player player, Colour previousColour){

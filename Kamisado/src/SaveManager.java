@@ -31,7 +31,6 @@ public class SaveManager {
 	}
 
 	public void saveBoard(Board board, Colour lastColour) {
-		System.out.println("!!!!!!!!!!!YOU HAVE SAVED SOMETHING TO THE STACK!!!!!!!!!!!!!");
 		stack.push(board);
 		colStack.push(lastColour);
 
@@ -72,7 +71,7 @@ public class SaveManager {
 
 		}
 
-		System.out.println("PREVIOUS COLOUR TURNCOUTN TEST: " + previousColour + " " + turncount);
+		
 		pw.print(previousColour + " " + turncount + " " + rounds + "\n");
 		System.out.println();
 
@@ -80,7 +79,6 @@ public class SaveManager {
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
 				Colour c = saves.peek().getColour(row, col);
-				System.out.println("SAVE TEST:" + c);
 				pw.println(c);
 			}
 		}

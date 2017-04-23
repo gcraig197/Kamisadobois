@@ -168,7 +168,7 @@ public class TwoPlayerGame {
 			player2RoundsWon++;
 		}
 		
-		calcPointsWon(currPlayer);
+		leaderBoard.saveScore(currPlayer, calcPointsWon(currPlayer));
 		
 		if(earlyWin())
 			break;
@@ -179,24 +179,24 @@ public class TwoPlayerGame {
 		state.setSumoPieces(sumoPieces);
 		counter++;
 		}
-		leaderBoard.saveScore(currPlayer, currPlayer.getPoints());
+		
 		leaderBoard.saveLeaderBoard();
 		gameover = new GameOverGUI(currPlayer);
 	}
 	
 	
-	private void calcPointsWon(Player currPlayer) {
-		if(state.getWinningPiece().getTeeth() == 1){
-			currPlayer.addPoints(3);
+	private int calcPointsWon(Player currPlayer) {
+		if(state.getWinningPiece().getTeeth() - 1 == 1){
+			return 3;
 		}
-		else if(state.getWinningPiece().getTeeth() == 2){
-			currPlayer.addPoints(7);
+		else if(state.getWinningPiece().getTeeth() - 1 == 2){
+			return 7;
 		}
-		else if(state.getWinningPiece().getTeeth() == 3){
-			currPlayer.addPoints(15);
+		else if(state.getWinningPiece().getTeeth() - 1 == 3){
+			return 15;
 		}
 		else{
-			currPlayer.addPoints(1);
+			return 1;
 		}
 		
 	}

@@ -39,14 +39,14 @@ public class Test {
 //		leaderboard.saveScore(p2, 5);
 //		leaderboard.saveLeaderBoard();
 		
-		ScoreBoard sb = new ScoreBoard();
-		sb.populate();
-		Player p = new Player();
-		p.setName("Test");
-		sb.saveScore(p, 20);
-		sb.saveToFile();
-		sb.clearArray();
-		sb.load();
+//		ScoreBoard sb = new ScoreBoard();
+//		sb.populate();
+//		Player p = new Player();
+//		p.setName("Test");
+//		sb.saveScore(p, 20);
+//		sb.saveToFile();
+//		sb.clearArray();
+//		sb.load();
 		
 		
 		

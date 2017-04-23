@@ -224,14 +224,6 @@ public class Board {
 		System.out.println();
 	}
 	
-	public void printTeeth(){
-		for (int i = 0; i < 8; i++) {
-			for(int j = 0; j< 8; j++){
-				System.out.println(getPieceCell(i, j).getPieceColour() + " " + getPieceCell(i, j).getTeeth());
-			}
-		}
-	}
-	
 	public int getLastPieceX(Player player, Colour previousColour){
 		int currposa = 0;
 		for(int i=0;i<8;i++){

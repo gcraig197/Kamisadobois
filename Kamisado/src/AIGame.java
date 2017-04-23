@@ -109,11 +109,7 @@ public class AIGame {
 		state.printGame();
 		while (counter < rounds) {
 			while (state.isFinished() == false) {
-				
-				System.out.println("\nSUMOOOPIECESSSS\n");
-				System.out.println(sumoPieces.size());
-				
-				
+
 				currPlayer = getPlayerTurn();
 				if (currPlayer == player1) {
 					System.out.println(currPlayer.getName() + " make your move!");
@@ -124,7 +120,6 @@ public class AIGame {
 					}
 
 					previousColour = state.move(player1, previousColour, turncount,rounds);
-					System.out.println("broke out of state");
 				} else {
 					currPlayer = player2;
 					System.out.println(currPlayer.getName() + " make your move!");
@@ -156,7 +151,7 @@ public class AIGame {
 				player2RoundsWon++;
 			}
 			
-			calcPointsWon(currPlayer);
+			leaderBoard.saveScore(currPlayer, calcPointsWon(currPlayer));
 			
 			if(earlyWin())
 				break;
@@ -167,23 +162,26 @@ public class AIGame {
 			state.setSumoPieces(sumoPieces);
 			counter++;
 		}
-		leaderBoard.saveScore(currPlayer, currPlayer.getPoints());
 		leaderBoard.saveLeaderBoard();
 		gameover = new GameOverGUI(currPlayer);
 	}
 	
-	private void calcPointsWon(Player currPlayer) {
-		if(state.getWinningPiece().getTeeth() == 1){
-			currPlayer.addPoints(3);
+	private int calcPointsWon(Player currPlayer) {
+		
+		
+		System.out.println("Winning Piece Stats: " + state.getWinningPiece().getPieceColour() + " " + state.getWinningPiece().getTeeth());
+		
+		if(state.getWinningPiece().getTeeth() - 1 == 1){
+		return 3;
 		}
-		else if(state.getWinningPiece().getTeeth() == 2){
-			currPlayer.addPoints(7);
+		else if(state.getWinningPiece().getTeeth() - 1 == 2){
+		return 7;
 		}
-		else if(state.getWinningPiece().getTeeth() == 3){
-			currPlayer.addPoints(15);
+		else if(state.getWinningPiece().getTeeth()- 1 == 3){
+			return 15;
 		}
 		else{
-			currPlayer.addPoints(1);
+			return 1;
 		}
 		
 	}

@@ -18,13 +18,11 @@ public class LeaderBoard {
 //		populate();
 	}
 
-	public void saveScore(Player player, int points) {
-		System.out.println("save score array size: " + leaderboard.size());
-		
+	public void saveScore(Player player, int points) {	
 		if (leaderboard.size() == 0) {
-			player.addPoints(points);
 			leaderboard.add(player);
-			System.out.println("First To Play!");
+			leaderboard.get(0).addPoints(points);
+			System.out.println("Saved " + player.getName() + "'s score");
 			
 		}
 		
@@ -39,9 +37,10 @@ public class LeaderBoard {
 			if (i == leaderboard.size() - 1 && leaderboard.get(i).getName() != player.getName()) { // Player
 																									// //
 																									// existing
-				player.addPoints(points);
+				
 				leaderboard.add(player);
-				System.out.println("PLAYER ADDED!");
+				leaderboard.get(i + 1).addPoints(points);
+				System.out.println("Saved " + player.getName() + "'s score");
 				break;
 			}
 		}
@@ -78,7 +77,6 @@ public class LeaderBoard {
 	}
 
 	public void saveLeaderBoard() throws FileNotFoundException {
-		System.out.println("PRINTING PRINTING PRINTING ARRAY = " + leaderboard.size());
 
 		PrintWriter pw = new PrintWriter(scores);
 		pw.println(leaderboard.size());
@@ -86,7 +84,6 @@ public class LeaderBoard {
 		for (int i = 0; i < leaderboard.size(); i++) {
 			Player temp = leaderboard.get(i);
 			pw.println(temp.getName() + " " + temp.getPoints());
-			System.out.println(temp.getName());
 		}
 		sortLeaderBoard();
 		pw.flush();
@@ -110,7 +107,6 @@ public class LeaderBoard {
 
 		for (int i = 0; i < leaderboardsize; i++) {
 
-			System.out.println(s);
 
 			s = br.readLine();
 			tokeniser = new Scanner(s);
@@ -132,7 +128,6 @@ public class LeaderBoard {
 	public void clearArray() {
 		leaderboard.removeAll(leaderboard);
 
-		System.out.println("array size : " + leaderboard.size());
 	}
 	
 	public void printLeaderBoard(){

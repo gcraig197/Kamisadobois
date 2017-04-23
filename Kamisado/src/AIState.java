@@ -41,12 +41,11 @@ public class AIState {
 	}
 
 	public Colour move(Player player, Colour previousColour, int turncount, int rounds) {
-		board.printTeeth();
 		save.saveGame(board);
 		gui.refresh(board);
 
 		if (deadLockCheck(player, previousColour) == false) {
-			System.out.println(player.getTeam());
+	
 			return board.getColour(board.getLastPieceX(player, previousColour),
 					board.getLastPieceY(player, previousColour));
 		}
@@ -58,7 +57,7 @@ public class AIState {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
 					if (gui.canSave()) {
-						System.out.println("Turn count test!! " + turncount);
+
 						save(previousColour, turncount, rounds);
 						gui.setCanSave(false);
 					}
@@ -97,7 +96,7 @@ public class AIState {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
 					if (gui.canSave()) {
-						System.out.println("Turn count test!! " + turncount);
+
 						save(previousColour, turncount, rounds);
 						gui.setCanSave(false);
 					}
@@ -129,15 +128,15 @@ public class AIState {
 			if (movelegality(player, currposa, currposb, newposa, newposb, previousColour)) {
 
 				save.saveBoard(cloneBoard(), previousColour);
-				System.out.println("!!!SAVED BOARD!!!:");
+		
 				board.setPieceCell(newposa, newposb, board.getPieceCell(currposa, currposb));
 
 				board.setPieceCell(currposa, currposb, board.getBlankPiece());
 				deadlockFlag = false;
 				gui.refresh(board);
 				gui.setCanMove(false);
-				System.out.println("return point");
-				System.out.println(board.getColour(newposa, newposb));
+
+
 				return board.getColour(newposa, newposb);
 			}
 
@@ -150,7 +149,7 @@ public class AIState {
 
 			int currposa = board.getLastPieceX(player, previousColour);
 			int currposb = board.getLastPieceY(player, previousColour);
-			System.out.println("(" + currposa + "," + currposb + ")");
+
 			gui.setCanMove(false);
 			gui.availableMoves(currposa, currposb, player);
 
@@ -160,7 +159,7 @@ public class AIState {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
 					if (gui.canSave()) {
-						System.out.println("Turn count test!! " + turncount);
+	
 						save(previousColour, turncount,rounds);
 						gui.setCanSave(false);
 					}
@@ -206,8 +205,8 @@ public class AIState {
 				deadlockFlag = false;
 				gui.refresh(board);
 				gui.setCanMove(false);
-				System.out.println("return point");
-				System.out.println(board.getColour(newposa, newposb));
+		
+
 				return board.getColour(newposa, newposb);
 			}
 
@@ -249,8 +248,7 @@ public class AIState {
 	
 	public Piece getWinningPiece(){
 		Piece temp = new Piece(winningPiece.getPieceColour(), winningPiece.getTeam(), winningPiece.getTeeth());
-		System.out.println("\nWinning Piece stats\n");
-		System.out.println("\n" + winningPiece.getPieceColour() + " " + winningPiece.getTeam() + " " + winningPiece.getTeeth() + "\n");
+
 		return temp;
 	}
 
@@ -652,8 +650,6 @@ public class AIState {
 
 	public void undo() {
 		Board temp = save.undo();
-		System.out.println("!!!!!!IN UNDO!!!!!!!");
-		System.out.println("temp:");
 		temp.printCurrentBoard();
 
 		for (int i = 0; i < 8; i++) {
@@ -662,15 +658,7 @@ public class AIState {
 			}
 		}
 
-		// for (int i = 0; i < 8; i++) {
-		// System.out.println();
-		// for (int j = 0; j < 8; j++) {
-		// System.out.print(temp.getPieceCell(i, j).getPieceColour());
-		// board.setPieceCell(i, j, temp.getPieceCell(i, j));
-		//
-		// }
-		//
-		// }
+
 
 	}
 

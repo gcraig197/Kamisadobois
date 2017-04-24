@@ -59,7 +59,7 @@ public class SaveManager {
 
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				Piece p = saves.peek().getPieceCell(row, col); // Contents of //
+				Piece p = saves.peek().getPieceCell(row, col); // Contents of 
 																// one square of
 																// board.
 				if (p.getTeam() == Colour.WHITE) {

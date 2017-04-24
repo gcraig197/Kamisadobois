@@ -72,7 +72,7 @@ public class AIState {
 							previousColour = move(player,previousColour, turncount,rounds);
 							return previousColour;
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+						
 							e.printStackTrace();
 						}
 					}
@@ -81,7 +81,7 @@ public class AIState {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -110,16 +110,16 @@ public class AIState {
 							previousColour = move(player,previousColour, turncount,rounds);
 							return previousColour;
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+					
 							e.printStackTrace();
 						}
 					}
 					
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				}
 			}
@@ -173,7 +173,7 @@ public class AIState {
 							previousColour = move(player,previousColour, turncount,rounds);
 							return previousColour;
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 					}
@@ -187,7 +187,7 @@ public class AIState {
 
 					}
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -318,29 +318,7 @@ public class AIState {
 		return true;
 
 	}
-
-	// if (player.getTeam() == Colour.WHITE
-	// && board.getPieceCell(currposa + 1, currposb).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa + 1, currposb - 1).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa + 1, currposb + 1).getPieceColour() !=
-	// Colour.BLANK) {
-	// return false;
-	// } else if (player.getTeam() == Colour.BLACK
-	// && board.getPieceCell(currposa - 1, currposb).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa - 1, currposb - 1).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa - 1, currposb + 1).getPieceColour() !=
-	// Colour.BLANK) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	//
-	// }
-
+	
 	private boolean movelegality(Player player, int currposa, int currposb, int newposa, int newposb,
 			Colour previousColour) {
 

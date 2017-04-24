@@ -55,7 +55,7 @@ public class State {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -70,7 +70,7 @@ public class State {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -102,7 +102,7 @@ public class State {
 				try {
 					TimeUnit.MILLISECONDS.sleep(20);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -228,28 +228,6 @@ public class State {
 		return true;
 
 	}
-
-	// if (player.getTeam() == Colour.WHITE
-	// && board.getPieceCell(currposa + 1, currposb).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa + 1, currposb - 1).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa + 1, currposb + 1).getPieceColour() !=
-	// Colour.BLANK) {
-	// return false;
-	// } else if (player.getTeam() == Colour.BLACK
-	// && board.getPieceCell(currposa - 1, currposb).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa - 1, currposb - 1).getPieceColour() !=
-	// Colour.BLANK
-	// && board.getPieceCell(currposa - 1, currposb + 1).getPieceColour() !=
-	// Colour.BLANK) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	//
-	// }
 
 	private boolean movelegality(Player player, int currposa, int currposb, int newposa, int newposb,
 			Colour previousColour) {
@@ -470,9 +448,7 @@ public class State {
 			gui.refresh(board);
 			previousColour = board.getColour(aimove.getI(), aimove.getJ());
 			lastColour = previousColour;
-			// move
-			// aimove.getApos();
-			// aimove.getBpos();
+
 
 		}
 
@@ -494,9 +470,7 @@ public class State {
 
 			AImove aimove = array.get(rng.nextInt(array.size()));
 			board.setPieceCell(aimove.getI(), aimove.getJ(), p);
-			// move
-			// aimove.getApos();
-			// aimove.getBpos();
+
 
 		}
 		return previousColour;

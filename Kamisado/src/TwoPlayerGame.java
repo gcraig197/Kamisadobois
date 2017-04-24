@@ -43,7 +43,7 @@ public class TwoPlayerGame {
 		try {
 			leaderBoard.loadLeaderBoard();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -55,7 +55,7 @@ public class TwoPlayerGame {
 			try {
 				TimeUnit.MILLISECONDS.sleep(250);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -156,7 +156,7 @@ public class TwoPlayerGame {
 			try {
 				TimeUnit.MILLISECONDS.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -168,7 +168,7 @@ public class TwoPlayerGame {
 			player2RoundsWon++;
 		}
 		
-		leaderBoard.saveScore(currPlayer, calcPointsWon(currPlayer));
+		
 		
 		if(earlyWin())
 			break;
@@ -180,6 +180,7 @@ public class TwoPlayerGame {
 		counter++;
 		}
 		
+		leaderBoard.saveScore(currPlayer, calcPointsWon(currPlayer));
 		leaderBoard.saveLeaderBoard();
 		gameover = new GameOverGUI(currPlayer);
 	}

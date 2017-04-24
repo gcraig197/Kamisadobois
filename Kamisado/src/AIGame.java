@@ -48,7 +48,7 @@ public class AIGame {
 		try {
 			leaderBoard.loadLeaderBoard();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 	}
@@ -59,7 +59,7 @@ public class AIGame {
 			try {
 				TimeUnit.MILLISECONDS.sleep(250);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+	
 				e.printStackTrace();
 			}
 		}
@@ -151,7 +151,7 @@ public class AIGame {
 				player2RoundsWon++;
 			}
 			
-			leaderBoard.saveScore(currPlayer, calcPointsWon(currPlayer));
+		
 			
 			if(earlyWin())
 				break;
@@ -162,6 +162,7 @@ public class AIGame {
 			state.setSumoPieces(sumoPieces);
 			counter++;
 		}
+		leaderBoard.saveScore(currPlayer, calcPointsWon(currPlayer));
 		leaderBoard.saveLeaderBoard();
 		gameover = new GameOverGUI(currPlayer);
 	}

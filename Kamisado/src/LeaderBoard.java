@@ -15,7 +15,7 @@ public class LeaderBoard {
 	public LeaderBoard() {
 		leaderboard = new ArrayList<Player>();
 		scores = new File("src/scores");
-//		populate();
+
 	}
 
 	public void saveScore(Player player, int points) {	
@@ -51,12 +51,9 @@ public class LeaderBoard {
 	}
 
 	public void sortLeaderBoard() {
-		// Sort Algorithm based on player.getPoints
-		// logic to sort the elements
-		// change vars
 
 		int x = leaderboard.size();
-		int y;
+		int y = 0;
 		for (int z = leaderboard.size(); z >= 0; z--) {
 			for (int i = 0; i < x - 1; i++) {
 				y = i + 1;
@@ -140,14 +137,5 @@ public class LeaderBoard {
 		}
 	}
 
-	public void populate() {
-		for (int i = 0; i < 10; i++) {
-			Player temp = new Player();
-			temp.setName("EMPTY");
-			temp.setPoints(0);
-			leaderboard.add(temp);
-
-		}
-	}
 
 }
